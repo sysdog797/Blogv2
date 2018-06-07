@@ -1,0 +1,77 @@
+@keyframes reveal-header{
+    0% {top: -6rem;}
+    100% {top: 0;}
+}
+
+.header{
+    background: #444;
+    color: #bbb;
+    cursor: default;
+    height: 4.5rem;
+    left: 0;
+    line-height: 4.5rem;
+    position: fixed;
+    top: 0;
+    width: 100%;
+    z-index: 10000;
+    
+    &.alt{
+        background: none;
+        color: rgba(255, 255, 255, 0.75);
+        position: absolute;
+    }
+
+    &.reveal{
+        animation: reveal-header 0.5s;
+    }
+
+    h1{
+        color: inherit;
+        height: inherit;
+        left: 2.16rem;
+        line-height: inherit;
+        margin: 0;
+        padding: 0;
+        position: absolute;
+        top: 0;
+        font-size: 1.3rem;
+        font-weight: 200;
+
+        a{
+            color: #fff;
+            font-weight: 400;
+            border: 0;
+        }
+    }
+
+    .nav{
+        height: inherit;
+        line-height: inherit;
+        position: absolute;
+        right: 1.3rem;
+        top: 0;
+        vertical-align: middle;
+
+        ul{
+            margin: 0;
+            padding-left: 0;
+
+            li{
+                display: inline-block;
+                white-space: nowrap;
+
+                a{
+                    color: #fff;
+                    display: inline-block;
+                    text-decoration: none;
+                    border: 0;
+                    height: 4.5rem;
+                    line-height: 4.5rem;
+                    padding: 0 1.7rem;
+                    font-weight: 300;
+                    // border-radius: 6px;
+                }
+            }
+        }
+    }
+}
