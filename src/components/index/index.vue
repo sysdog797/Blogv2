@@ -18,7 +18,7 @@
                         <img src="../../static/images/article/react.svg" alt/>
                     </div>
                     <div class="content">
-                        <h2 class="title">{{data.title}}</h2>
+                        <router-link :to="'/article/'+data.number" class="title">{{data.title}}</router-link>
                         <p>{{data.body}}</p>
                     </div>
                 </div>
@@ -35,35 +35,24 @@
 <script>
     import header from "../../components/header/header";
     import banner from "../../components/banner/banner";
-    import Vue from 'vue';
 
     export default {
         data() {
             return {
-                datas: [
-                    {
-                        title: 'Markdown 处理方案：remarkable 和 highlight ',
-                        body: '从github API拿到的数据需要在后台解析渲染，这里就是采用的remarkable，参考官方文档很容易就调通了。为了能够使代码能够高亮，这里采用了highlight.js插件进行代码着色。有个小坑，主要是内容是异步加载进来的，所以这个js执行不到。解决方案是vue的自定义指令，定义一个v-highlight的指令来使得pre code中的代码高亮。'
-                    },{
-                        title: 'Markdown 处理方案：remarkable 和 highlight ',
-                        body: '从github API拿到的数据需要在后台解析渲染，这里就是采用的remarkable，参考官方文档很容易就调通了。为了能够使代码能够高亮，这里采用了highlight.js插件进行代码着色。有个小坑，主要是内容是异步加载进来的，所以这个js执行不到。解决方案是vue的自定义指令，定义一个v-highlight的指令来使得pre code中的代码高亮。'
-                    },{
-                        title: 'Markdown 处理方案：remarkable 和 highlight ',
-                        body: '从github API拿到的数据需要在后台解析渲染，这里就是采用的remarkable，参考官方文档很容易就调通了。为了能够使代码能够高亮，这里采用了highlight.js插件进行代码着色。有个小坑，主要是内容是异步加载进来的，所以这个js执行不到。解决方案是vue的自定义指令，定义一个v-highlight的指令来使得pre code中的代码高亮。'
-                    }
-                ],
+                datas: [],
                 backShow: false,
                 headerShow: true,
                 headerHeight: 50  // header高度
             };
         },
         created(){
-            // const url = 'https://api.github.com/repos/sysdog797/syscoding/issues';
-            // this.$http.get(url).then((response) => {
-            //     response = response.body;
-            //     this.datas = response;
-            //     console.log(response);
-            // });
+            //const url = 'https://api.github.com/repos/sysdog797/syscoding/issues';
+            const url = 'mock-data.json';
+            this.$http.get(url).then((response) => {
+                response = response.body;
+                this.datas = response;
+                console.log(response);
+            });
             this.$nextTick(() => {
                 window.addEventListener("scroll", this.handleScroll);
             })

@@ -1,7 +1,7 @@
 <template>
     <div class="header" :class="{'alt': headerShow, 'reveal': !headerShow}">
         <h1>
-            <router-link to="index.html">Syscoding.cn</router-link>
+            <router-link to="../">Syscoding.cn</router-link>
             by Sys
         </h1>
         <nav class="nav">

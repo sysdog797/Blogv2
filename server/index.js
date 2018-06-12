@@ -20,20 +20,30 @@ const app = express();
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({
-  extended: false
+    extended: false
 }));
 
 // 访问静态资源文件 这里是访问所有dist目录下的静态资源文件
 app.use(express.static(path.resolve(__dirname, '../dist')))
 
 // app.use(cookieParser('blogv2'));
+// session 中间件
+app.use(session({
+  name: 'Blog2.0', // 设置 cookie 中保存 session id 的字段名称
+  secret: 'Blog2.0', // 通过设置 secret 来计算 hash 值并放在 cookie 中，使产生的 signedCookie 防篡改
+  cookie: {
+    maxAge: 6000000
+  }, // 过期时间，过期后 cookie 中的 session id 自动删除
+  resave: false,
+  saveUninitialized: true
+}));
 
-// app.use(api); // 一定要放在session后面session注册才会生效
+app.use(api); // 一定要放在session后面session注册才会生效
 
 //因为是单页应用 所有请求都走/dist/index.html
 app.get('*', function (req, res) {
-  const html = fs.readFileSync(path.resolve(__dirname, '../dist/index.html'), 'utf-8')
-  res.send(html)
+    const html = fs.readFileSync(path.resolve(__dirname, '../dist/index.html'), 'utf-8')
+    res.send(html)
 })
 // 监听8088端口
 app.listen(8088);
