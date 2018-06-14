@@ -15,8 +15,7 @@
         data() {
             return {
                 backTop: false,
-                height: 400,
-                show: true,
+                height: 400
             };
         },
         mounted() {

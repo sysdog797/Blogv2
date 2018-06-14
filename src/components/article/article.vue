@@ -4,7 +4,7 @@
         <div class="content-wrap">
             <header>
                 <div class="icon-wrap">
-                    <img src="../../static/images/article/react.svg" alt/>
+                    <img :src="'../../static/images/article/pic-'+ picNumber +'.png'" alt/>
                 </div>
                 <div class="border-2px"></div>
                 <h2>{{data.title}}</h2>
@@ -13,17 +13,14 @@
                 <div class="content" v-html="data.body" v-highlight></div>
             </div>
         </div>
-        <div v-show="backShow" class="back-top" @click="backTop">
-            <div class="back-top-content">
-                <img class="back-icon" src="../../static/images/backtop.png" alt/>
-            </div>
-        </div>
+        <backtop></backtop>
     </div>
 </template>
 
 <script>
     import header from "../../components/header/header";
     import Remarkable from 'remarkable';
+    import backtop from "../../components/backtop/backtop";
 
     export default {
         data(){
@@ -31,7 +28,8 @@
                 data: {},
                 title: '',
                 subtitle: '',
-                backShow: false
+                backShow: false,
+                picNumber: 0
             }
         },
         created(){
@@ -45,6 +43,7 @@
                 body = md.render(body);
                 rs.body = body;
                 this.data = rs;
+                this.picNumber = this.$route.params.id;
             });
             this.$nextTick(() => {
                 window.addEventListener("scroll", this.handleScroll);
@@ -68,7 +67,8 @@
             }
         },
         components: {
-            "v-header": header
+            "v-header": header,
+            backtop
         }
     };
 </script>

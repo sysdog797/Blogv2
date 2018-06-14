@@ -13,9 +13,9 @@
                 </span>
             </div>
             <div class="card-wrap" ref="cardwrap">
-                <div class="card" v-for="data in datas" :key="data.id">
+                <div class="card" v-for="(data, index) in datas" :key="data.id">
                     <div class="icon-wrap">
-                        <img src="../../static/images/article/react.svg" alt/>
+                        <img :src="'../../static/images/article/pic-'+ (len - index) +'.png'" alt/>
                     </div>
                     <div class="content">
                         <router-link :to="'/article/'+data.number" class="title">{{data.title}}</router-link>
@@ -37,7 +37,7 @@
         data() {
             return {
                 datas: [],
-                show: true,
+                len: 1,
                 backShow: false,
                 headerShow: true,
                 headerHeight: 50  // header高度
@@ -49,6 +49,7 @@
             this.$http.get(url).then((response) => {
                 response = response.body;
                 this.datas = response;
+                this.len = this.datas.length;
                 console.log(response);
             });
             this.$nextTick(() => {
