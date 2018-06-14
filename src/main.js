@@ -13,6 +13,7 @@ new Vue({
 
 Vue.directive('highlight', function (el) {
     let blocks = el.querySelectorAll('pre code');
+    if(blocks.length === 0) return;
     blocks.forEach((block) => {
         hljs.highlightBlock(block)
     })

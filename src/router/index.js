@@ -15,5 +15,12 @@ export default new Router({
         path:'/article/:id',
         name: 'article',
         component: article
-    }]
+    }],
+    scrollBehavior (to, from, savedPosition){
+        if (savedPosition) {
+            return savedPosition
+        } else {
+            return { x: 0, y: 0 }
+        }
+    }
 })

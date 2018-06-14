@@ -23,7 +23,6 @@
 
 <script>
     import header from "../../components/header/header";
-    // remarkable
     import Remarkable from 'remarkable';
 
     export default {

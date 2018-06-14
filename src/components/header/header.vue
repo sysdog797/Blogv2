@@ -7,7 +7,7 @@
         <nav class="nav">
             <ul>
                 <li>
-                    <router-link to="index.html">Home</router-link>
+                    <router-link to="#">Home</router-link>
                 </li>
                 <li>
                     <router-link to="#">About me</router-link>

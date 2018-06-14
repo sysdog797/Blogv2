@@ -136,33 +136,9 @@ body{
     }
 }
 
-.back-top{
-    position: fixed;
-    right: 60px;
-    bottom: 40px;
-    height: 32px;
-    width: 32px;
-    cursor: pointer;
-
-    .back-top-content{
-        height: 32px;
-        width: 32px;
-        border-radius: 50%;
-        background-color: rgba(0, 0, 0, 0.45);
-        overflow: hidden;
-        transition: all .3s cubic-bezier(.645,.045,.355,1);
-        
-        &:hover{
-            background-color: rgba(0,0,0,.65);
-        }
-
-        .back-icon{
-            position: absolute;
-            width: 16px;
-            height: 16px;
-            left: 50%;
-            top: 50%;
-            transform: translate(-50%,-50%);
-        }
-    }
-}
+.fade-enter-active, .fade-leave-active {
+    transition: opacity .5s;
+  }
+  .fade-enter, .fade-leave-to /* .fade-leave-active below version 2.1.8 */ {
+    opacity: 0;
+  }

@@ -24,22 +24,20 @@
                 </div>
             </div>
         </div>
-        <div v-show="backShow" class="back-top" @click="backTop">
-            <div class="back-top-content">
-                <img class="back-icon" src="../../static/images/backtop.png" alt/>
-            </div>
-        </div>
+        <backtop></backtop>
     </div>
 </template>
 
 <script>
     import header from "../../components/header/header";
     import banner from "../../components/banner/banner";
+    import backtop from "../../components/backtop/backtop";
 
     export default {
         data() {
             return {
                 datas: [],
+                show: true,
                 backShow: false,
                 headerShow: true,
                 headerHeight: 50  // header高度
@@ -77,17 +75,12 @@
                     behavior: 'smooth',
                     top: this.$refs.cardwrap.offsetTop - 60 // consider banner
                 });
-            },
-            backTop() {
-                window.scrollTo({
-                    behavior: 'smooth',
-                    top: 0
-                });
             }
         },
         components: {
             "v-header": header,
-            banner
+            banner,
+            backtop
         }
     };
 </script>
