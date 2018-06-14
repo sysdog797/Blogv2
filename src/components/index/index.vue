@@ -9,7 +9,8 @@
                     <p>此处有待填充一条装B却又不失低调的Slogan...</p>
                 </div>
                 <span class="image">
-                    <img src="../../static/images/homepage-banner-may-18.jpg" alt/>
+                    <img src="../../static/images/bg-laptop.jpg" alt/>
+                    <div class="mask"></div>
                 </span>
             </div>
             <div class="card-wrap" ref="cardwrap">
