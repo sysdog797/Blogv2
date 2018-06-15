@@ -74,7 +74,7 @@ body{
             right: 0;
             margin-top: 4rem;
             box-shadow: 0 2px 0 0 #e5e5e5;
-            height: 25.7rem;
+            height: 25.8rem;
             overflow: hidden;
 
             img{
@@ -89,7 +89,7 @@ body{
                 position: absolute;
                 top: 0;
                 width: 100%;
-                height: 25.7rem;
+                height: 25.8rem;
                 background: rgba(0,0,0,.3);
             }
         }
@@ -97,55 +97,132 @@ body{
 }
 
 .card-wrap{
-    .card:hover{
-        box-shadow: 6px 6px 3px 0px #e5e5e5;
-        transform: scale(1.02);
-    }
+    width: 100%;
+    overflow: hidden;
+    padding-right: 2rem;
+    box-sizing: border-box;
+    cursor: default;
 
-    .card{
-        background: #fff;
-        border-radius: 6px;
-        box-shadow: 0 2px 2px 0 #e5e5e5;
-        padding: 5.2rem;
-        margin-bottom: 2.7rem;
-        overflow: hidden;
-        width: 100%;
-        box-sizing: border-box;
-        transition: all 0.5s;
+    .card-box{
+        width: 50%;
+        float: left;
+        margin: 0 2rem 2.5rem 0;
 
-        .icon-wrap{
-            float: left;
-            padding: 0 3.5rem 0 0;
-            box-sizing: border-box;
-            border-right: 2px solid #e2e2e2;
-
-            img{
-                width: 95px;
-                height: 95px;
-            }
+        &:nth-child(2n){
+            margin-right: -2rem;
         }
 
-        .content{
-            float: left;
-            width: calc(100% - 16.7rem);
-            padding: 0 0 0 3.5rem;
+        .card{
+            background: #fff;
+            padding: 2.5rem;
+            position: relative;
+            box-shadow: 0 2px 0 0 #e5e5e5;
 
-            .title{
-                font-size: 2rem;
-                line-height: 4rem;
-                color: #646464;
+            &:hover{
+                .icon-wrap{
+                    transform: scale(1.2);
+                }
             }
+    
+            &::after{
+                content: "";
+                position: absolute;
+                bottom: 0;
+                left: 0;
+                width: 100%;
+                height: 9.2rem;
+                background-color: hsla(0,0%,100%,0);
+                background-image: linear-gradient(hsla(0,0%,100%,0),#fff 75%);
+                z-index: 100;
+            }
+    
+            .label{
+                font-size: 1.2rem;
+                line-height: 2.5rem;
+                font-family: MiriamLibre, sans-serif;
+                letter-spacing: .1rem;
+    
+                span{
+                    font-weight: 600;
+                    color: #474747;
+                }
+            }
+    
+            a.title{
+                font-size: 1.6rem;
+                line-height: 3rem;
+                color: #474747;
+                display: inline-block;
+                font-weight: 600;
+                overflow: hidden;
+                text-overflow: ellipsis;
+                white-space: nowrap;
+                transition: all .5s;
+                position: relative;
 
+                &::before{
+                    content: "";
+                    position: absolute;
+                    width: 100%;
+                    height: 1px;
+                    bottom: 0;
+                    left: 0;
+                    background-color: #474747;
+                    visibility: hidden;
+                    transform: scaleX(0);
+                    transition: .4s ease-in-out;  
+                }
+                
+                &:hover::before{
+                    transform: scaleX(1);
+                    visibility: visible; 
+                }
+
+                &:hover{
+                    color: #000;
+                }
+            }
+    
             p{
-                font-size: 1.3rem;
-                line-height: 2.3rem;
                 display: -webkit-box;
                 -webkit-box-orient: vertical;
-                -webkit-line-clamp: 2;
+                -webkit-line-clamp: 3;
                 overflow: hidden;
+                height: 6.6rem;
+                line-height: 2.2rem;
+                margin: 1rem 0 4.5rem 0;
+                font-size: 1.2rem;
+            }
+    
+            .icon-wrap{
+                position: absolute;
+                right: 2.5rem;
+                bottom: 1.5rem;
+                z-index: 9999;
+                transition: all .5s ease-in-out;
+    
+                img{
+                    width: 2.8rem;
+                }
+            }
+    
+            a.readmore{
+                font-size: 1.2rem;
+                z-index: 9999;
+                position: absolute;
+                bottom: 2.5rem;
+                left: 2.5rem;
+                color: #474747;
+                font-weight: 600;
+                transition: all .5s;
+
+                &:hover{
+                    color: #000;
+                }
             }
         }
     }
+    
 }
 
 .fade-enter-active, .fade-leave-active {

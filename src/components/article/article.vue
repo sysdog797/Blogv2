@@ -29,7 +29,7 @@
                 title: '',
                 subtitle: '',
                 backShow: false,
-                picNumber: 0
+                picNumber: 1
             }
         },
         created(){

@@ -14,13 +14,18 @@
                 </span>
             </div>
             <div class="card-wrap" ref="cardwrap">
-                <div class="card" v-for="(data, index) in datas" :key="data.id">
-                    <div class="icon-wrap">
-                        <img :src="'../../static/images/article/pic-'+ (len - index) +'.png'" alt/>
-                    </div>
-                    <div class="content">
+                <div class="card-box" v-for="(data, index) in datas" :key="data.id">
+                    <div class="card">
+                        <div class="label">
+                            <span>Sys</span>
+                            / {{data.created_at}}
+                        </div>
                         <router-link :to="'/article/'+data.number" class="title">{{data.title}}</router-link>
                         <p>{{data.body}}</p>
+                        <div class="icon-wrap">
+                            <img :src="'../../static/images/article/pic-'+ (len - index) +'.png'" alt/>
+                        </div>
+                        <router-link :to="'/article/'+data.number" class="readmore">阅读全文...</router-link>
                     </div>
                 </div>
             </div>
@@ -33,6 +38,7 @@
     import header from "../../components/header/header";
     import banner from "../../components/banner/banner";
     import backtop from "../../components/backtop/backtop";
+    import dayjs from 'dayjs';
 
     export default {
         data() {
@@ -51,6 +57,9 @@
                 response = response.body;
                 this.datas = response;
                 this.len = this.datas.length;
+                for(let i = 0; i < this.len; i++){
+                    this.datas[i].created_at = dayjs(this.datas[i].created_at).format("MMMM DD, YYYY");
+                }
                 console.log(response);
             });
             this.$nextTick(() => {
