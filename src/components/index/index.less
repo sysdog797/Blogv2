@@ -117,12 +117,6 @@ body{
             padding: 2.5rem;
             position: relative;
             box-shadow: 0 2px 0 0 #e5e5e5;
-
-            &:hover{
-                .icon-wrap{
-                    transform: scale(1.2);
-                }
-            }
     
             &::after{
                 content: "";
@@ -193,18 +187,31 @@ body{
                 margin: 1rem 0 4.5rem 0;
                 font-size: 1.2rem;
             }
-    
-            .icon-wrap{
+
+            .icon-box{
                 position: absolute;
                 right: 2.5rem;
                 bottom: 1.5rem;
                 z-index: 9999;
-                transition: all .5s ease-in-out;
-    
-                img{
-                    width: 2.8rem;
+                width: 100%;
+
+                .icon-wrap{
+                    float: right;
+                    z-index: 9999;
+                    border-right: 1px solid #e2e2e2;
+                    padding: 0 .5rem;
+        
+                    img{
+                        width: 2.4rem;
+                    }
+                }
+
+                .icon-wrap:nth-child(1){
+                    border-right: 0 !important;
                 }
             }
+    
+            
     
             a.readmore{
                 font-size: 1.2rem;

@@ -4,7 +4,7 @@
         <div class="content-wrap">
             <header>
                 <div class="icon-wrap">
-                    <img :src="'../../static/images/article/pic-'+ picNumber +'.png'" alt/>
+                    <img :src="'../../static/images/article/'+ data.labels[0].name +'.png'" alt/>
                 </div>
                 <div class="border-2px"></div>
                 <h2>{{data.title}}</h2>
@@ -28,8 +28,7 @@
                 data: {},
                 title: '',
                 subtitle: '',
-                backShow: false,
-                picNumber: 1
+                backShow: false
             }
         },
         created(){

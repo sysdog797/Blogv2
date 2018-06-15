@@ -14,7 +14,7 @@
                 </span>
             </div>
             <div class="card-wrap" ref="cardwrap">
-                <div class="card-box" v-for="(data, index) in datas" :key="data.id">
+                <div class="card-box" v-for="data in datas" :key="data.id">
                     <div class="card">
                         <div class="label">
                             <span>Sys</span>
@@ -22,8 +22,10 @@
                         </div>
                         <router-link :to="'/article/'+data.number" class="title">{{data.title}}</router-link>
                         <p>{{data.body}}</p>
-                        <div class="icon-wrap">
-                            <img :src="'../../static/images/article/pic-'+ (len - index) +'.png'" alt/>
+                        <div class="icon-box">
+                            <div v-for="(label, index) in data.labels" class="icon-wrap" :key="index">
+                                <img :src="'../../static/images/article/'+ label.name +'.png'" alt/>
+                            </div>
                         </div>
                         <router-link :to="'/article/'+data.number" class="readmore">阅读全文...</router-link>
                     </div>
