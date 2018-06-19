@@ -1,7 +1,7 @@
 <template>
     <div class="article">
         <v-header :headerShow="false"></v-header>
-        <div class="content-wrap">
+        <div class="content-wrap" v-if="contentShow">
             <header>
                 <div class="icon-wrap">
                     <img :src="'../../static/images/article/'+ data.labels[0].name +'.png'" alt/>
@@ -13,6 +13,9 @@
                 <div class="content" v-html="data.body" v-highlight></div>
             </div>
         </div>
+        <div class="loading" v-show="!contentShow">
+            <loading></loading>
+        </div>
         <backtop></backtop>
     </div>
 </template>
@@ -21,6 +24,7 @@
     import header from "../../components/header/header";
     import Remarkable from 'remarkable';
     import backtop from "../../components/backtop/backtop";
+    import loading from "../../components/loading/loading";
 
     export default {
         data(){
@@ -28,7 +32,8 @@
                 data: {},
                 title: '',
                 subtitle: '',
-                backShow: false
+                backShow: false,
+                contentShow: false
             }
         },
         created(){
@@ -43,6 +48,9 @@
                 rs.body = body;
                 this.data = rs;
                 this.picNumber = this.$route.params.id;
+                setTimeout(()=>{
+                    this.contentShow = true;
+                }, 2000);
             });
             this.$nextTick(() => {
                 window.addEventListener("scroll", this.handleScroll);
@@ -67,7 +75,8 @@
         },
         components: {
             "v-header": header,
-            backtop
+            backtop,
+            loading
         }
     };
 </script>
