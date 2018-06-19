@@ -20,7 +20,7 @@
                             <span>Sys</span>
                             / {{data.created_at}}
                         </div>
-                        <router-link :to="'/article/'+data.number" class="title">{{data.title}}</router-link>
+                        <router-link :to="'/article/'+data.number" class="title" v-bind:class="{'long-title':data.title.length>30}">{{data.title}}</router-link>
                         <p>{{data.body}}</p>
                         <div class="icon-box">
                             <div v-for="(label, index) in data.labels" class="icon-wrap" :key="index">
@@ -61,6 +61,7 @@
                 this.len = this.datas.length;
                 for(let i = 0; i < this.len; i++){
                     this.datas[i].created_at = dayjs(this.datas[i].created_at).format("MMMM DD, YYYY");
+                    console.log(this.datas[i].title.length);
                 }
                 console.log(response);
             });
