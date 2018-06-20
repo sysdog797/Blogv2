@@ -37,8 +37,7 @@
             }
         },
         created(){
-            const url = "/api/getArticle/" + this.$route.params.id;
-            //const url = './../mock-data.json';
+            const url = "http://localhost:8088/api/getArticle/" + this.$route.params.id;
             this.$http.get(url).then((response) => {
                 let rs = response.body;
                 let md = new Remarkable();

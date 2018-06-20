@@ -14,22 +14,25 @@
                 </span>
             </div>
             <div class="card-wrap" ref="cardwrap">
-                <div class="card-box" v-for="data in datas" :key="data.id">
-                    <div class="card">
-                        <div class="label">
-                            <span>Sys</span>
-                            / {{data.created_at}}
-                        </div>
-                        <router-link :to="'/article/'+data.number" class="title" v-bind:class="{'long-title':data.title.length>30}">{{data.title}}</router-link>
-                        <p>{{data.body}}</p>
-                        <div class="icon-box">
-                            <div v-for="(label, index) in data.labels" class="icon-wrap" :key="index">
-                                <img :src="'../../static/images/article/'+ label.name +'.png'" alt/>
+                <transition-group name="card-fade">
+                    <div class="card-box" v-for="data in datas" :key="data.id">
+                        <div class="card">
+                            <div class="label">
+                                <span>Sys</span>
+                                / {{data.created_at}}
                             </div>
+                            <router-link :to="'/article/' + data.number" class="title" v-bind:class="{'long-title':data.title.length > 30}">{{data.title}}</router-link>
+                            <p v-html="data.body" class="content-box"></p>
+                            <div class="icon-box">
+                                <div v-for="(label, index) in data.labels" class="icon-wrap" :key="index">
+                                    <img :src="'../../static/images/article/'+ label.name +'.png'" alt/>
+                                </div>
+                            </div>
+                            <router-link :to="'/article/'+data.number" class="readmore">阅读全文...</router-link>
                         </div>
-                        <router-link :to="'/article/'+data.number" class="readmore">阅读全文...</router-link>
                     </div>
-                </div>
+                </transition-group>
+                <loading v-show="loading"></loading>
             </div>
         </div>
         <backtop></backtop>
@@ -40,29 +43,39 @@
     import header from "../../components/header/header";
     import banner from "../../components/banner/banner";
     import backtop from "../../components/backtop/backtop";
+    import loading from "../../components/loading/loading";
     import dayjs from 'dayjs';
+    import Remarkable from 'remarkable';
 
     export default {
         data() {
             return {
                 datas: [],
-                len: 1,
                 backShow: false,
                 headerShow: true,
-                headerHeight: 50  // header高度
+                headerHeight: 50,  // header高度
+                h: 373.5,
+                page: 1,
+                loading: false,
+                count: 0,
+                canLoad: true
             };
         },
         created(){
-            //const url = 'mock-data.json';
-            const url = '/api/getList/'
+            const url = 'http://localhost:8088/api/getList/' + this.page;
             this.$http.get(url).then((response) => {
-                console.log(response);
-                response = response.body;
-                this.datas = response;
-                this.len = this.datas.length;
-                for(let i = 0; i < this.len; i++){
-                    this.datas[i].created_at = dayjs(this.datas[i].created_at).format("MMMM DD, YYYY");
+                let rs = response.body;
+                for(let i = 0; i < rs.length; i++){
+                    rs[i].created_at = dayjs(rs[i].created_at).format("MMMM DD, YYYY");
+                    let md = new Remarkable();
+                    let body = md.render(rs[i].body);
+                    rs[i].body = body;
                 }
+                this.count = rs[0].number; // article.number == count
+                this.datas = rs;
+            }, err => {
+                // err callback
+                console.log(err);
             });
             this.$nextTick(() => {
                 window.addEventListener("scroll", this.handleScroll);
@@ -82,18 +95,55 @@
                 }else{
                     this.backShow = false;
                 }
+                if(scrollTop - vh > this.h){
+                    this.loadMoreData();
+                }
             },
             handleLearnMore() {
-                window.scrollTo({
-                    behavior: 'smooth',
-                    top: this.$refs.cardwrap.offsetTop - 60 // consider banner
+                setTimeout(() => {
+                    window.scrollTo({
+                        behavior: 'smooth',
+                        top: this.$refs.cardwrap.offsetTop // consider banner
+                    });
+                }, 300);
+            },
+            loadMoreData() {
+                if(!this.canLoad) return;
+                this.loading = true;
+                this.canLoad = false;
+                this.page++;
+                const url = 'http://localhost:8088/api/getList/' + this.page;
+                this.$http.get(url).then((response) => {
+                    let rs = response.body;
+                    for(let i = 0; i < rs.length; i++){
+                        rs[i].created_at = dayjs(rs[i].created_at).format("MMMM DD, YYYY");
+                        let md = new Remarkable();
+                        let body = md.render(rs[i].body);
+                        rs[i].body = body;
+                    }
+                    setTimeout(() => {
+                        this.datas = this.datas.concat(rs);
+                        this.loading = false;
+                    }, 1000)
+                }, err => {
+                    // err callback
+                    console.log(err);
                 });
+                this.h += 503;  // 阈值增加后才能监听
+                if(this.page * 4 < this.count){
+                    this.$nextTick(() => {
+                        this.canLoad = true;
+                    })
+                }else{
+                    this.canLoad = false;
+                }
             }
         },
         components: {
             "v-header": header,
             banner,
-            backtop
+            backtop,
+            loading
         }
     };
 </script>

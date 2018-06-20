@@ -3,7 +3,7 @@
         <div class="wrapper">
             <h2>Syscoding</h2>
             <p>{{msg}}</p>
-            <span to="#" class="button" v-on:click="handleClick">Learn More</span>
+            <span class="button" v-on:click="handleClick">Learn More</span>
         </div>
     </div>
 </template>
