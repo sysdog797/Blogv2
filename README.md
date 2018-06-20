@@ -1,18 +1,8 @@
-# blogv2
+# Syscoding.cn v2.0 
 
-> A Vue.js project
+> Coming soon...
 
-## Build Setup
+文章来源：syscoding/issues/
+本站点由Vue.js强力驱动
 
-``` bash
-# install dependencies
-npm install
-
-# serve with hot reload at localhost:8080
-npm run dev
-
-# build for production with minification
-npm run build
-```
-
-For detailed explanation on how things work, consult the [docs for vue-loader](http://vuejs.github.io/vue-loader).
+###[Welcome!](http://syscoding.cn)
