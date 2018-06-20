@@ -53,17 +53,16 @@
             };
         },
         created(){
-            //const url = 'https://api.github.com/repos/sysdog797/syscoding/issues';
-            const url = 'mock-data.json';
+            //const url = 'mock-data.json';
+            const url = '/api/getList/'
             this.$http.get(url).then((response) => {
+                console.log(response);
                 response = response.body;
                 this.datas = response;
                 this.len = this.datas.length;
                 for(let i = 0; i < this.len; i++){
                     this.datas[i].created_at = dayjs(this.datas[i].created_at).format("MMMM DD, YYYY");
-                    console.log(this.datas[i].title.length);
                 }
-                console.log(response);
             });
             this.$nextTick(() => {
                 window.addEventListener("scroll", this.handleScroll);

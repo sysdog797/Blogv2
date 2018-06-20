@@ -37,20 +37,20 @@
             }
         },
         created(){
-            //const url = "/api/getArticle/" + this.$route.params.id;
-            const url = './../mock-data.json';
+            const url = "/api/getArticle/" + this.$route.params.id;
+            //const url = './../mock-data.json';
             this.$http.get(url).then((response) => {
-                response = response.body;
-                let rs = response[response.length - this.$route.params.id];
-                let body = rs.body;
-                var md = new Remarkable();
-                body = md.render(body);
+                let rs = response.body;
+                let md = new Remarkable();
+                let body = md.render(rs.body);
                 rs.body = body;
                 this.data = rs;
-                this.picNumber = this.$route.params.id;
                 setTimeout(()=>{
                     this.contentShow = true;
-                }, 2000);
+                }, 1000);
+            }, err => {
+                // err callback
+                console.log(err);
             });
             this.$nextTick(() => {
                 window.addEventListener("scroll", this.handleScroll);

@@ -1,40 +1,66 @@
 const express = require('express');
-var path = require('path');
-
-// remarkable
-const Remarkable = require('remarkable');
-var md = new Remarkable();
-
-var request = require('request');
+const request = require('request');
 const router = express.Router();
 
-// 获取文章
-router.get('/api/getArticle/:id', (req, res) => {
-    var id = req.params.id;
-    console.log('request begin...')
+var Article = require('./model');
+var duration = 3600000; // 一小时
+
+// 定时载入更新数据
+setInterval(() => {
+    console.log('Automatic update article list!');
+    handleUpdate();
+}, duration)
+
+function handleUpdate(){
     var options = {
-        //url: '/static/mock-data.json'
-        url: 'https://api.github.com/repos/sysdog797/syscoding/issues/' + id,
-        headers: {
-            'User-Agent': 'request'
-        }
+        url: 'https://api.github.com/repos/sysdog797/syscoding/issues',
+        encoding: 'utf8',
+        headers: {'User-Agent': 'request'}
     };
-    request(options, function (error, response, body) {
-        console.log(response)
-        if (!error && response.statusCode == 200) {
-            var content = JSON.parse(body);
-            var body = md.render(content.body);
-            var result = {
-              body: body,
-              user: content.user.login,
-              title: content.title,
-              created: content.created_at,
-              number: content.number
-            }
-            console.log(result)
-            res.send(result);
+    request(options, (error, response, body) => {
+        const list = JSON.parse(body);
+        for(let issue of list){
+            Article.update({number: issue.number}, {$set: {
+                id: issue.id,
+                url: issue.url,
+                number: issue.number,
+                title: issue.title,
+                body: issue.body,
+                labels: issue.labels,
+                created_at: issue.created_at,
+                updated_at: issue.updated_at
+            }}, {upsert: true}, (err) => {
+                console.log('Update article-' + issue.number + ' status: ', err ? 'failed' : 'success');
+            });
         }
-    })
-})
+    });
+}
+
+router.get('/api/updateList/', () => { handleUpdate(); });
+
+// 获取列表
+router.get('/api/getList/', (req, res) => {
+    Article.find({}, null, {sort: {number: -1}}, (err, result) => {
+        if(err){
+            console.log('error message: ' + err);
+            res.status(400).send('Bad request: ' + err);
+            return;
+        }
+        res.status(200).send(result);
+    });
+});
+
+// 获取文章
+router.get('/api/getArticle/:number', (req, res) => {
+    let number = req.params.number;
+    Article.findOne({number: number}, (err, result) => {
+        if(err){
+            console.log('error message: ' + err);
+            res.status(400).send('Bad request: ' + err);
+            return;
+        }
+        res.status(200).send(result);
+    });
+});
 
 module.exports = router;
