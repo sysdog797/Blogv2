@@ -1,6 +1,6 @@
 <template>
     <div class="article">
-        <v-header :headerShow="false"></v-header>
+        <v-header :headerShow="false" :showCard="handleShowCard"></v-header>
         <div class="content-wrap" v-if="contentShow">
             <header>
                 <div class="icon-wrap">
@@ -70,6 +70,9 @@
                     behavior: 'smooth',
                     top: 0
                 });
+            },
+            handleShowCard() {
+                console.log('show card...');
             }
         },
         components: {

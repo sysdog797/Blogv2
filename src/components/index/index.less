@@ -97,6 +97,16 @@ body{
     }
 }
 
+.card-mask{
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: rgba(0,0,0,.2);
+    z-index: 100;
+}
+
 .card-wrap{
     width: 100%;
     overflow: hidden;
@@ -110,7 +120,7 @@ body{
         position: absolute;
         bottom: 0;
         left: 50%;
-        height: 20px;
+        height: 30px;
         transform: translateX(-50%);
 
         &>div{

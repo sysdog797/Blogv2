@@ -1,16 +1,16 @@
 <template>
     <div class="header" :class="{'alt': headerShow, 'reveal': !headerShow}">
         <h1>
-            <router-link to="../">Syscoding.cn</router-link>
+            <router-link to="/">Syscoding.cn</router-link>
             by Sys
         </h1>
         <nav class="nav">
             <ul>
                 <li>
-                    <router-link to="#">Home</router-link>
+                    <a href="/" class="item">Home</a>
                 </li>
                 <li>
-                    <router-link to="#">About me</router-link>
+                    <span class="item" @click="showCard">About me</span>
                 </li>
             </ul>
         </nav>
@@ -28,6 +28,11 @@
             return {
             };
         },
+        methods: {
+            showCard() {
+                this.$emit('showCard');
+            }
+        }
     };
 </script>
 

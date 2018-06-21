@@ -1,6 +1,6 @@
 <template>
     <div class="box" ref="box">
-        <v-header :headerShow="headerShow"></v-header>
+        <v-header :headerShow="headerShow" :showCard="handleShowCard"></v-header>
         <banner v-on:learnMore="handleLearnMore"></banner>
         <div class="container">
             <div class="intro-card">
@@ -34,6 +34,8 @@
                 </transition-group>
                 <loading v-show="loading"></loading>
             </div>
+            <card></card>
+            <div class="card-mask"></div>
         </div>
         <backtop></backtop>
     </div>
@@ -44,6 +46,7 @@
     import banner from "../../components/banner/banner";
     import backtop from "../../components/backtop/backtop";
     import loading from "../../components/loading/loading";
+    import card from "../../components/card/card";
     import dayjs from 'dayjs';
     import Remarkable from 'remarkable';
 
@@ -107,6 +110,9 @@
                     });
                 }, 300);
             },
+            handleShowCard() {
+                console.log('show card...');
+            },
             loadMoreData() {
                 if(!this.canLoad) return;
                 this.loading = true;
@@ -143,7 +149,8 @@
             "v-header": header,
             banner,
             backtop,
-            loading
+            loading,
+            card
         }
     };
 </script>

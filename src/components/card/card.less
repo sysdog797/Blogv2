@@ -1,0 +1,79 @@
+.about-me{
+    position: fixed;
+    height: 52rem;
+    width: 38rem;
+    top: 50%;
+    background: #fff;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    border-radius: 6px;
+    z-index: 9999;
+    cursor: default;
+
+    .header-mask{
+        position: absolute;
+        width: 100%;
+        height: 20.5rem;
+        z-index: -1;
+        top: 0;
+        background-color: #0a0814;
+        border-radius: 6px 6px 0 0;
+    }
+
+    .header-wrap{
+        width: 100%;
+        height: 12rem;
+        position: relative;
+        margin-top: 14rem;
+
+        img{
+            border-radius: 50%;
+            width: 12rem;
+            height: 12rem;
+            position: absolute;
+            left: 50%;
+            top: 50%;
+            transform: translate(-50%,-50%);
+        }
+    }
+
+    .slogan{
+        width: 100%;
+        position: absolute;
+        top: 6rem;
+        text-align: center;
+        color: #fff;
+        letter-spacing: 1px;
+        line-height: 4rem;
+        font-size: 3.6rem;
+        font-family: AlexBrush, sans-serif;
+    }
+
+    h2{
+        font-size: 1.8rem;
+        color: #333;
+        text-align: center;
+        line-height: 4rem;
+        letter-spacing: 1px;
+        margin-top: 2.2rem;
+    }
+
+    p{
+        font-size: 1.4rem;
+        text-align: center;
+        line-height: 2.6rem;
+    }
+
+    .contact{
+        transition: all .5s;
+        cursor: pointer;
+    }
+
+    .github:hover{
+        color:#333
+    }
+
+    .weibo:hover{
+        color: #fa2f2f;
+    }
+}
