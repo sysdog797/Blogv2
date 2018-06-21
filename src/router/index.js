@@ -10,11 +10,17 @@ export default new Router({
     routes: [{
         path: '/',
         name: 'index',
-        component: index
+        component: index,
+        meta: {
+            keepAlive: true
+        },
     },{
         path:'/article/:id',
         name: 'article',
-        component: article
+        component: article,
+        meta: {
+            keepAlive: false
+        }
     }],
     scrollBehavior (to, from, savedPosition){
         if (savedPosition) {

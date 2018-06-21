@@ -13,7 +13,7 @@
         data() {
             return {
                 msg: '',
-                str: 'My name is Sys. I am a web developer.'
+                str: 'My name is Sys. I am a junior web developer.'
             };
         },
         created() {

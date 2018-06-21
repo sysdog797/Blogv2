@@ -53,8 +53,8 @@
                 datas: [],
                 backShow: false,
                 headerShow: true,
-                headerHeight: 50,  // header高度
-                h: 373.5,
+                headerHeight: 60,  // header高度
+                h: 430,
                 page: 1,
                 loading: false,
                 count: 0,
@@ -103,7 +103,7 @@
                 setTimeout(() => {
                     window.scrollTo({
                         behavior: 'smooth',
-                        top: this.$refs.cardwrap.offsetTop // consider banner
+                        top: this.$refs.cardwrap.offsetTop -422 // consider banner
                     });
                 }, 300);
             },
@@ -129,7 +129,7 @@
                     // err callback
                     console.log(err);
                 });
-                this.h += 503;  // 阈值增加后才能监听
+                this.h += 589;  // 阈值增加后才能监听
                 if(this.page * 4 < this.count){
                     this.$nextTick(() => {
                         this.canLoad = true;
