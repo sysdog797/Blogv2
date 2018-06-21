@@ -275,33 +275,21 @@ body{
     transform: translateY(30px);
 }
 
-.button-ripple() {
-    overflow: hidden;
-    position: relative;
-    transition: background-color .3s linear, border .3s linear;
+.mask-fade-enter-active, .mask-fade-leave-active{
+    transition: all .7s;
+}
 
-    &:after {
-        content: "";
-        display: block;
-        position: absolute;
-        width: 100%;
-        height: 100%;
-        top: 0;
-        left: 0;
-        pointer-events: none;
-        background-image: radial-gradient(circle, #000 10%, rgba(0, 0, 0, 0) 10.01%);
-        background-repeat: no-repeat;
-        background-position: 50%;
-        transform: scale(10);
-        opacity: 0;
-        transition: transform .5s, opacity 1s;
-    }
+.mask-fade-enter, .mask-fade-leave-to{
+    opacity: 0;
+}
 
-    &:active:after {
-        transform: scale(0);
-        opacity: .2;
-        transition: 0s;
-    }
+.aboutme-fade-enter-active, .aboutme-fade-leave-active{
+    transition: all .7s;
+}
+
+.aboutme-fade-enter, .aboutme-fade-leave-to{
+    opacity: 0;
+    transform: translateY(30px);
 }
 
 .fade-enter-active, .fade-leave-active {

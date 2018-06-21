@@ -1,6 +1,6 @@
 <template>
-    <div class="box" ref="box">
-        <v-header :headerShow="headerShow" :showCard="handleShowCard"></v-header>
+    <div class="box" ref="box" @click="bodyClick">
+        <v-header :headerShow="headerShow" v-on:showCard="handleShowCard"></v-header>
         <banner v-on:learnMore="handleLearnMore"></banner>
         <div class="container">
             <div class="intro-card">
@@ -34,8 +34,12 @@
                 </transition-group>
                 <loading v-show="loading"></loading>
             </div>
-            <card></card>
-            <div class="card-mask"></div>
+            <transition name="aboutme-fade">
+                <card v-show="cardShow"></card>
+            </transition>
+            <transition name="mask-fade">
+                <div class="card-mask" v-show="cardShow"></div>
+            </transition>
         </div>
         <backtop></backtop>
     </div>
@@ -55,13 +59,14 @@
             return {
                 datas: [],
                 backShow: false,
-                headerShow: true,
+                headerShow: false,
                 headerHeight: 60,  // header高度
                 h: 430,
                 page: 1,
                 loading: false,
                 count: 0,
-                canLoad: true
+                canLoad: true,
+                cardShow: false
             };
         },
         created(){
@@ -89,9 +94,9 @@
                 let scrollTop = document.documentElement.scrollTop || document.body.scrollTop;
                 let vh = document.body.offsetHeight;
                 if(scrollTop > this.headerHeight){
-                    this.headerShow = false;    
+                    this.headerShow = true;    
                 }else{
-                    this.headerShow = true;
+                    this.headerShow = false;
                 }
                 if(scrollTop > document.body.clientHeight){
                     this.backShow = true;
@@ -112,6 +117,12 @@
             },
             handleShowCard() {
                 console.log('show card...');
+                this.cardShow = true;
+                document.body.classList.add('abandon-scroll');
+            },
+            bodyClick() {
+                this.cardShow = false;
+                document.body.classList.remove('abandon-scroll');
             },
             loadMoreData() {
                 if(!this.canLoad) return;

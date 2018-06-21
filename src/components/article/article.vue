@@ -1,6 +1,6 @@
 <template>
-    <div class="article">
-        <v-header :headerShow="false" :showCard="handleShowCard"></v-header>
+    <div class="article" @click="bodyClick">
+        <v-header :headerShow="false" v-on:showCard="handleShowCard"></v-header>
         <div class="content-wrap" v-if="contentShow">
             <header>
                 <div class="icon-wrap">
@@ -17,14 +17,21 @@
             <loading></loading>
         </div>
         <backtop></backtop>
+        <transition name="aboutme-fade">
+            <card v-show="cardShow"></card>
+        </transition>
+        <transition name="mask-fade">
+            <div class="card-mask" v-show="cardShow"></div>
+        </transition>
     </div>
 </template>
 
 <script>
     import header from "../../components/header/header";
-    import Remarkable from 'remarkable';
     import backtop from "../../components/backtop/backtop";
     import loading from "../../components/loading/loading";
+    import card from "../../components/card/card";
+    import Remarkable from 'remarkable';
 
     export default {
         data(){
@@ -33,7 +40,8 @@
                 title: '',
                 subtitle: '',
                 backShow: false,
-                contentShow: false
+                contentShow: false,
+                cardShow: false
             }
         },
         created(){
@@ -73,12 +81,19 @@
             },
             handleShowCard() {
                 console.log('show card...');
+                this.cardShow = true;
+                document.body.classList.add('abandon-scroll');
+            },
+            bodyClick() {
+                this.cardShow = false;
+                document.body.classList.remove('abandon-scroll');
             }
         },
         components: {
             "v-header": header,
             backtop,
-            loading
+            loading,
+            card
         }
     };
 </script>
