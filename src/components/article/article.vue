@@ -1,6 +1,6 @@
 <template>
     <div class="article" @click="bodyClick">
-        <v-header :headerShow="false" v-on:showCard="handleShowCard"></v-header>
+        <v-header headerShow="false" v-on:showCard="handleShowCard"></v-header>
         <div class="content-wrap" v-if="contentShow">
             <header>
                 <div class="icon-wrap">

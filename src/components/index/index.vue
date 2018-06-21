@@ -6,7 +6,7 @@
             <div class="intro-card">
                 <div class="major">
                     <h2>打怪升级中的初级前端工程师</h2>
-                    <p>此处有待填充一条装B却又不失低调的Slogan...</p>
+                    <p>Slogan写在这里，并没有想好写什么，有待填充</p>
                 </div>
                 <span class="image">
                     <img src="../../static/images/bg-laptop.jpg" alt/>
