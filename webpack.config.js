@@ -83,7 +83,7 @@ module.exports = {
       asset: '[path].gz[query]',
       algorithm: 'gzip',
       test: new RegExp(
-          '\\.(js|css)$'    //压缩js与css
+          '\\.(js|css|ttf)$'    //压缩js与css
       ),
       threshold: 10240,
       minRatio: 0.8
