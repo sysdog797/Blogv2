@@ -6,7 +6,7 @@
             <div class="intro-card">
                 <div class="major">
                     <h2>打怪升级中的初级前端工程师</h2>
-                    <p>Slogan写在这里，并没有想好写什么，有待填充</p>
+                    <p>Tips：不想做全栈开发的程序员不是一个好前端</p>
                 </div>
                 <span class="image">
                     <img src="../../static/images/bg-laptop.jpg" alt/>
