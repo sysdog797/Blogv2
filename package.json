@@ -10,6 +10,7 @@
     "build": "cross-env NODE_ENV=production webpack --progress --hide-modules"
   },
   "dependencies": {
+    "compression-webpack-plugin": "^1.1.11",
     "cookie-parser": "^1.4.3",
     "copy-webpack-plugin": "^4.5.1",
     "dayjs": "^1.6.9",

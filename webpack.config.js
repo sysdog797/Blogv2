@@ -3,6 +3,7 @@ const webpack = require('webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const ExtractTextPlugin = require("extract-text-webpack-plugin");
 const CopyWebpackPlugin = require('copy-webpack-plugin');
+const CompressionPlugin = require("compression-webpack-plugin");
 
 module.exports = {
   entry: {
@@ -66,18 +67,32 @@ module.exports = {
     new HtmlWebpackPlugin({
       filename: 'index.html',   // 生成的html存放路径，相对于publicPath
       inject: 'body',
-      template: 'index.html'  // html模板路径
+      template: 'index.html',  // html模板路径
+      minify: {
+        removeComments: true,        //去注释
+        collapseWhitespace: true,    //压缩空格
+        removeAttributeQuotes: true  //去除属性引用
+      },
     }),
     new ExtractTextPlugin("static/css/[name].css"),
     new CopyWebpackPlugin([{
       from: path.resolve(__dirname, './src/static'),
       to: 'static'
-    }])
+    }]),
+    new CompressionPlugin({
+      asset: '[path].gz[query]',
+      algorithm: 'gzip',
+      test: new RegExp(
+          '\\.(js|css)$'    //压缩js与css
+      ),
+      threshold: 10240,
+      minRatio: 0.8
+    })
   ]
 }
 
 if (process.env.NODE_ENV === 'production') {
-  // module.exports.devtool = '#source-map'
+  module.exports.devtool = '#inline-source-map'
   // http://vue-loader.vuejs.org/en/workflow/production.html
   module.exports.plugins = (module.exports.plugins || []).concat([
     new webpack.DefinePlugin({
@@ -87,6 +102,7 @@ if (process.env.NODE_ENV === 'production') {
     }),
     new webpack.optimize.UglifyJsPlugin({
       sourceMap: false,
+      comments: false,
       compress: {
         warnings: false
       }
