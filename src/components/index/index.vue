@@ -1,7 +1,7 @@
 <template>
     <div class="box" ref="box" @click="bodyClick">
         <v-header :headerShow="headerShow" v-on:showCard="handleShowCard"></v-header>
-        <banner v-on:learnMore="handleLearnMore"></banner>
+        <banner v-on:learnMore="handleLearnMore" :typing="typing"></banner>
         <div class="container">
             <div class="intro-card">
                 <div class="major">
@@ -66,7 +66,8 @@
                 loading: false,
                 count: 0,
                 canLoad: true,
-                cardShow: false
+                cardShow: false,
+                typing: false
             };
         },
         created(){
@@ -88,6 +89,13 @@
             this.$nextTick(() => {
                 window.addEventListener("scroll", this.handleScroll);
             })
+        },
+        mounted(){
+            setTimeout(()=>{
+                document.getElementById('app').style.opacity = 1;
+                document.body.removeChild(document.getElementById('app-loading'));
+                this.typing = true;
+            }, 100);
         },
         methods: {
             handleScroll() {

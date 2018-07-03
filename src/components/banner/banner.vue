@@ -10,14 +10,25 @@
 
 <script>
     export default {
+        props:{
+            typing: {
+                type: Boolean
+            }
+        },
         data() {
             return {
                 msg: '',
                 str: 'My name is Sys. I am a junior web developer.'
             };
         },
-        created() {
-            this.initTyping();
+        watch: {
+            typing: function(e) {
+                if(e){
+                    setTimeout(()=>{
+                       this.initTyping();
+                    }, 500);
+                };
+            }
         },
         methods: {
             initTyping() {
