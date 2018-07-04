@@ -10,7 +10,7 @@
 </template>
 
 <script>
-    import logo from './151515.png';
+    import logo from './sys.png';
 
     export default {
         props:{

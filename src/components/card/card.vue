@@ -16,7 +16,7 @@
 </template>
 
 <script>
-    import slogan from '../banner/151515.png';
+    import slogan from '../banner/sys.png';
 
     export default {
         data() {
