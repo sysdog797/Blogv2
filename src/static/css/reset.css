@@ -184,10 +184,10 @@
    src: url("../fonts/MiriamLibre-Regular.ttf");
  }
 
- @font-face{
+ /* @font-face{
   font-family: AlexBrush;
   src: url("../fonts/AlexBrush-Regular.ttf");
-}
+} */
 
 .abandon-scroll{
   height: 100%;

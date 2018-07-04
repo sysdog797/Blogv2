@@ -4,8 +4,10 @@
         <transition name="header-fade">
             <div class="header alt" v-show="headerShow">
                 <h1>
-                    <router-link to="/" class="logo">Syscoding.cn</router-link>
-                    &nbsp;by &nbsp;Sys
+                    <router-link to="/" class="logo">
+                        <img :src="logo" alt="logo" class="syscoding-cn"/>
+                    </router-link>
+                    <span>&nbsp;by &nbsp;Sys</span>
                 </h1>
                 <nav class="nav">
                     <ul>
@@ -22,8 +24,10 @@
         <transition name="header-static">
             <div class="header" v-show="!headerShow">
                 <h1>
-                    <router-link to="/" class="logo">Syscoding.cn</router-link>
-                    &nbsp;by &nbsp;Sys
+                    <router-link to="/" class="logo">
+                        <img :src="logo" alt="logo" class="syscoding-cn"/>
+                    </router-link>
+                    <span>&nbsp;by &nbsp;Sys</span>
                 </h1>
                 <nav class="nav">
                     <ul>
@@ -42,6 +46,8 @@
 </template>
 
 <script>
+    import logo from './14141414.png';
+
     export default {
         props:{
             headerShow: {
@@ -50,6 +56,7 @@
         },
         data() {
             return {
+                logo: logo
             };
         },
         methods: {

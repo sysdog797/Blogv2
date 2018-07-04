@@ -95,7 +95,7 @@
                 document.getElementById('app').style.opacity = 1;
                 document.body.removeChild(document.getElementById('app-loading'));
                 this.typing = true;
-            }, 100);
+            }, 1000);
         },
         methods: {
             handleScroll() {

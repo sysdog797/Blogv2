@@ -1,7 +1,8 @@
 <template>
     <div class="banner">
         <div class="wrapper">
-            <h2>Syscoding</h2>
+            <!-- <h2>Syscoding</h2> -->
+            <img class="logo" :src="logo" alt="logo"/>
             <p>{{msg}}</p>
             <span class="button" v-on:click="handleClick">Learn More</span>
         </div>
@@ -9,6 +10,8 @@
 </template>
 
 <script>
+    import logo from './151515.png';
+
     export default {
         props:{
             typing: {
@@ -18,7 +21,8 @@
         data() {
             return {
                 msg: '',
-                str: 'My name is Sys. I am a junior web developer.'
+                str: 'My name is Sys. I am a junior web developer.',
+                logo: logo
             };
         },
         watch: {
@@ -26,7 +30,7 @@
                 if(e){
                     setTimeout(()=>{
                        this.initTyping();
-                    }, 500);
+                    }, 1000);
                 };
             }
         },
