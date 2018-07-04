@@ -37,8 +37,17 @@
             <transition name="aboutme-fade">
                 <card v-show="cardShow"></card>
             </transition>
+            <transition name="alert-fade">
+                <div class="browser-alert" v-show="alert">
+                    <h1>Warning</h1>
+                    <div class="border-1px"></div>
+                    <p>使用Chrome浏览器以获取最佳体验！</p>
+                    <div class="border-1px"></div>
+                    <span v-on:click="alertok">OK</span>
+                </div>
+            </transition>
             <transition name="mask-fade">
-                <div class="card-mask" v-show="cardShow"></div>
+                <div class="card-mask" v-show="cardShow || alert"></div>
             </transition>
         </div>
         <backtop></backtop>
@@ -69,7 +78,8 @@
                 cardShow: false,
                 typing: false,
                 hmount: false,
-                bmount: false
+                bmount: false,
+                alert: false
             };
         },
         created(){
@@ -88,6 +98,12 @@
                 // err callback
                 console.log(err);
             });
+            let userAgent = this.getExploreName();
+            console.log(userAgent);
+            if(userAgent !== 'Chrome'){
+                this.alert = true;
+                document.body.classList.add('abandon-scroll');
+            };
             this.$nextTick(() => {
                 window.addEventListener("scroll", this.handleScroll);
             })
@@ -102,6 +118,32 @@
             }
         },
         methods: {
+            getExploreName(){
+                var userAgent = navigator.userAgent;
+                if(userAgent.indexOf("Opera") > -1 || userAgent.indexOf("OPR") > -1){
+                    return 'Opera';
+                }else if(userAgent.indexOf("compatible") > -1 && userAgent.indexOf("MSIE") > -1){
+                    return 'IE';
+                }else if(userAgent.indexOf("Edge") > -1){
+                    return 'Edge';
+                }else if(userAgent.indexOf("Firefox") > -1){
+                    return 'Firefox';
+                }else if(userAgent.indexOf("Safari") > -1 && userAgent.indexOf("Chrome") == -1){
+                    return 'Safari';
+                }else if(userAgent.indexOf("Chrome") > -1 && userAgent.indexOf("Safari") > -1){
+                    return 'Chrome';
+                }else if(!!window.ActiveXObject || "ActiveXObject" in window){
+                    return 'IE>=11';
+                }else{
+                    return 'Unkonwn';
+                }
+            },
+            alertok() {
+                setTimeout(()=>{
+                    this.alert = false;
+                    document.body.classList.remove('abandon-scroll');
+                }, 100);
+            },
             headerMounted() {
                 this.hmount = true;
             },
@@ -139,8 +181,10 @@
                 document.body.classList.add('abandon-scroll');
             },
             bodyClick() {
-                this.cardShow = false;
-                document.body.classList.remove('abandon-scroll');
+                if(!this.alert){
+                    this.cardShow = false;
+                    document.body.classList.remove('abandon-scroll');
+                };
             },
             loadMoreData() {
                 if(!this.canLoad) return;
