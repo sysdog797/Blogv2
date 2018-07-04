@@ -59,6 +59,9 @@
                 logo: logo
             };
         },
+        mounted(){
+            this.$emit('headerMounted');
+        },
         methods: {
             showCard(e) {
                 e.stopPropagation();

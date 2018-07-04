@@ -34,6 +34,9 @@
                 };
             }
         },
+        mounted(){
+            this.$emit('bannerMounted');
+        },
         methods: {
             initTyping() {
                 let tmp = '';

@@ -1,7 +1,7 @@
 <template>
     <div class="box" ref="box" @click="bodyClick">
-        <v-header :headerShow="headerShow" v-on:showCard="handleShowCard"></v-header>
-        <banner v-on:learnMore="handleLearnMore" :typing="typing"></banner>
+        <v-header :headerShow="headerShow" v-on:showCard="handleShowCard" v-on:headerMounted="headerMounted"></v-header>
+        <banner v-on:learnMore="handleLearnMore" v-on:bannerMounted="bannerMounted" :typing="typing"></banner>
         <div class="container">
             <div class="intro-card">
                 <div class="major">
@@ -67,7 +67,9 @@
                 count: 0,
                 canLoad: true,
                 cardShow: false,
-                typing: false
+                typing: false,
+                hmount: false,
+                bmount: false
             };
         },
         created(){
@@ -91,13 +93,21 @@
             })
         },
         mounted(){
-            setTimeout(()=>{
-                document.getElementById('app').style.opacity = 1;
-                document.body.removeChild(document.getElementById('app-loading'));
-                this.typing = true;
-            }, 1000);
+            if(this.bmount && this.hmount){
+                setTimeout(()=>{
+                    document.getElementById('app').style.opacity = 1;
+                    document.body.removeChild(document.getElementById('app-loading'));
+                    this.typing = true;
+                }, 700);
+            }
         },
         methods: {
+            headerMounted() {
+                this.hmount = true;
+            },
+            bannerMounted() {
+                this.bmount = true;
+            },
             handleScroll() {
                 let scrollTop = document.documentElement.scrollTop || document.body.scrollTop;
                 let vh = document.body.offsetHeight;
