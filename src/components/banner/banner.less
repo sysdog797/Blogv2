@@ -17,12 +17,14 @@
     height: 100vh;
     box-sizing: border-box;
     overflow: hidden;
+    min-height: 663px;
 
     .wrapper{
         position: absolute;
         left: 50%;
         top: 50%;
         transform: translate(-50%, -50%);
+        height: 24rem;
     }
 
     h2{
@@ -36,22 +38,41 @@
 
     .logo{
         width: 25rem;
-        height: 14rem;
+        height: 13rem;
     }
 
-    p{
+    .typing-words{
         font-size: 1.875rem;
         font-weight: 400;
         display: block;
-        width: 40.4rem;
+        //width: 40.4rem;
         font-size: 1.875rem;
-        padding-left: 0.5rem;
+        // padding-left: 0.5rem;
         margin-left: auto;
         margin-right: auto;
         text-align: left;
         line-height: 1.875rem;
         height: 1.875rem;
         font-family: sans-serif;
+    }
+
+    .template{
+        font-size: 1.875rem;
+        font-weight: 400;
+        display: inline-block;
+        //width: 40.4rem;
+        font-size: 1.875rem;
+        //padding-left: 0.5rem;
+        //margin-left: auto;
+        //margin-right: auto;
+        //text-align: left;
+        line-height: 1.875rem;
+        height: 1.875rem;
+        font-family: sans-serif;
+        cursor: default;
+        position: relative;
+        top: -9999px;
+        opacity: 0;
     }
 
     .button{
@@ -73,6 +94,10 @@
         font-size: 1.6rem;
         .button-ripple();
         font-family: sans-serif;
+        position: absolute;
+        left: 50%;
+        bottom: -3.2rem;
+        transform: translate(-50%, -50%);
     }
 }
 

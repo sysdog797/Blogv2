@@ -3,7 +3,8 @@
         <div class="wrapper">
             <!-- <h2>Syscoding</h2> -->
             <img class="logo" :src="logo" alt="logo"/>
-            <p>{{msg}}</p>
+            <p class="typing-words" ref="slogan" v-bind:style="{width:sloganWidth}">{{msg}}</p>
+            <p class="template" ref="template">{{str}}</p>
             <span class="button" v-on:click="handleClick">Learn More</span>
         </div>
     </div>
@@ -13,28 +14,31 @@
     import logo from './syscoding.svg';
 
     export default {
-        props:{
-            typing: {
-                type: Boolean
-            }
-        },
         data() {
             return {
                 msg: '',
                 str: 'My name is Sys. I am a junior web developer.',
-                logo: logo
+                logo: logo,
+                sloganWidth: '40.4rem',
+                canType: false
             };
         },
         watch: {
-            typing: function(e) {
+            canType: function(e) {
                 if(e){
-                    setTimeout(()=>{
-                       this.initTyping();
+                    setTimeout(() => {
+                        this.initTyping();
                     }, 1000);
-                };
+                }
             }
         },
         mounted(){
+            let template = this.$refs.template;
+            let slogan = this.$refs.sloagn;
+            this.sloganWidth = template.getBoundingClientRect().width + 'px';
+            setTimeout(() => {
+                this.canType = true;
+            }, 1000);
             this.$emit('bannerMounted');
         },
         methods: {

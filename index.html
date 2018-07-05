@@ -13,7 +13,9 @@
   
       function setUnitA() {
         var boundingWidth = docEl.getBoundingClientRect().width;
+        boundingWidth = boundingWidth > 1260 ? boundingWidth : 1260;
         var boundingHeight = window.innerHeight;
+        boundingHeight = boundingHeight > 623 ? boundingHeight : 623;
         var r = boundingWidth / boundingHeight;
         window.rem = r > radio ? boundingHeight / 75.92 : boundingWidth / 153.6;
         docEl.style.fontSize = window.rem + 'px';

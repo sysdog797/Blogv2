@@ -1,7 +1,7 @@
 <template>
     <div class="box" ref="box" @click="bodyClick">
         <v-header :headerShow="headerShow" v-on:showCard="handleShowCard" v-on:headerMounted="headerMounted"></v-header>
-        <banner v-on:learnMore="handleLearnMore" v-on:bannerMounted="bannerMounted" :typing="typing"></banner>
+        <banner v-on:learnMore="handleLearnMore" v-on:bannerMounted="bannerMounted"></banner>
         <div class="container">
             <div class="intro-card">
                 <div class="major">
@@ -76,7 +76,7 @@
                 count: 0,
                 canLoad: true,
                 cardShow: false,
-                typing: false,
+                //typing: false,
                 hmount: false,
                 bmount: false,
                 alert: false
@@ -113,7 +113,6 @@
                 setTimeout(()=>{
                     document.getElementById('app').style.opacity = 1;
                     document.body.removeChild(document.getElementById('app-loading'));
-                    this.typing = true;
                 }, 700);
             }
         },
