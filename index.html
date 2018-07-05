@@ -9,11 +9,13 @@
     <script type="text/javascript">
       var docEl = document.documentElement;
       var h;
+      var radio = 1536 / 759.2;
   
       function setUnitA() {
         var boundingWidth = docEl.getBoundingClientRect().width;
-        // boundingWidth = boundingWidth > 640 ? 640 : boundingWidth ;
-        window.rem = boundingWidth / 153.6;
+        var boundingHeight = window.innerHeight;
+        var r = boundingWidth / boundingHeight;
+        window.rem = r > radio ? boundingHeight / 75.92 : boundingWidth / 153.6;
         docEl.style.fontSize = window.rem + 'px';
       }
   
