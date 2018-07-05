@@ -4,8 +4,8 @@
         <div class="header-wrap">
             <img src="../../static/images/header/nick.jpg" alt/>
         </div>
-        <!-- <p class="slogan">Syscoding</p> -->
-        <img :src="slogan" alt="slogan" class="slogan"/>
+        <p class="slogan">Syscoding</p>
+        <!-- <img :src="slogan" alt="slogan" class="slogan"/> -->
         <h2>关于我</h2>
         <p>坐标成都，初入职场的初级前端工程师。</p>
         <p>热爱Coding，爱好各类运动，热衷篮球。</p>

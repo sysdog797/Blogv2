@@ -1,8 +1,8 @@
 <template>
     <div class="banner">
         <div class="wrapper">
-            <!-- <h2>Syscoding</h2> -->
-            <img class="logo" :src="logo" alt="logo"/>
+            <h2>Syscoding</h2>
+            <!-- <img class="logo" :src="logo" alt="logo"/> -->
             <p>{{msg}}</p>
             <span class="button" v-on:click="handleClick">Learn More</span>
         </div>

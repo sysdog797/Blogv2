@@ -6,6 +6,36 @@
     <link rel="stylesheet" type="text/css" href="/static/css/reset.css">
     <link href="/static/javascripts/highlight.js/styles/rainbow.css" rel="stylesheet">
     <link rel="shortcut icon" href="/static/images/favicon.png">
+    <script type="text/javascript">
+      var docEl = document.documentElement;
+      var h;
+  
+      function setUnitA() {
+        var boundingWidth = docEl.getBoundingClientRect().width;
+        // boundingWidth = boundingWidth > 640 ? 640 : boundingWidth ;
+        window.rem = boundingWidth / 153.6;
+        docEl.style.fontSize = window.rem + 'px';
+      }
+  
+      window.addEventListener('resize', function () {
+        clearTimeout(h);
+        h = setTimeout(function(){
+          setUnitA();
+        }, 300);
+      }, false);
+  
+      window.addEventListener('pageshow', function (e) {
+        if (e.persisted) {
+          clearTimeout(h);
+          h = setTimeout(function(){
+            setUnitA();
+          }, 300);
+        }
+      }, false);
+  
+      setUnitA();
+    </script>  
+    <script src="https://ajax.googleapis.com/ajax/libs/webfont/1.6.26/webfont.js"></script>
     <script src="/static/javascripts/highlight.js/highlight.pack.js"></script>
   </head>
   <body>
