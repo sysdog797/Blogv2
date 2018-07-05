@@ -4,12 +4,12 @@
         <transition name="header-fade">
             <div class="header alt" v-show="headerShow">
                 <h1>
-                    <router-link to="/" class="logo">Syscoding.cn</router-link>
-                    &nbsp;by &nbsp;Sys
-                    <!-- <router-link to="/" class="logo">
+                    <!-- <router-link to="/" class="logo">Syscoding.cn</router-link>
+                    &nbsp;by &nbsp;Sys -->
+                    <router-link to="/" class="logo">
                         <img :src="logo" alt="logo" class="syscoding-cn"/>
                     </router-link>
-                    <span>&nbsp;by &nbsp;Sys</span> -->
+                    <span>&nbsp;by &nbsp;Sys</span>
                 </h1>
                 <nav class="nav">
                     <ul>
@@ -26,12 +26,12 @@
         <transition name="header-static">
             <div class="header" v-show="!headerShow">
                 <h1>
-                    <router-link to="/" class="logo">Syscoding.cn</router-link>
-                    &nbsp;by &nbsp;Sys
-                    <!-- <router-link to="/" class="logo">
+                    <!-- <router-link to="/" class="logo">Syscoding.cn</router-link>
+                    &nbsp;by &nbsp;Sys -->
+                    <router-link to="/" class="logo">
                         <img :src="logo" alt="logo" class="syscoding-cn"/>
                     </router-link>
-                    <span>&nbsp;by &nbsp;Sys</span> -->
+                    <span>&nbsp;by &nbsp;Sys</span>
                 </h1>
                 <nav class="nav">
                     <ul>
@@ -50,7 +50,7 @@
 </template>
 
 <script>
-    import logo from './sys.cn.png';
+    import logo from './syscoding.cn.svg';
 
     export default {
         props:{
