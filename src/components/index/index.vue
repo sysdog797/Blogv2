@@ -1,7 +1,7 @@
 <template>
     <div class="box" ref="box" @click="bodyClick">
-        <v-header :headerShow="headerShow" v-on:showCard="handleShowCard" v-on:headerMounted="headerMounted"></v-header>
-        <banner v-on:learnMore="handleLearnMore" v-on:bannerMounted="bannerMounted"></banner>
+        <v-header :headerShow="headerShow" v-on:showCard="handleShowCard" v-on:handleHeaderHeight="handleHeaderHeight"></v-header>
+        <banner v-on:learnMore="handleLearnMore"></banner>
         <div class="container">
             <div class="intro-card">
                 <div class="major">
@@ -76,9 +76,6 @@
                 count: 0,
                 canLoad: true,
                 cardShow: false,
-                //typing: false,
-                hmount: false,
-                bmount: false,
                 alert: false
             };
         },
@@ -109,12 +106,10 @@
             })
         },
         mounted(){
-            if(this.bmount && this.hmount){
-                setTimeout(()=>{
-                    document.getElementById('app').style.opacity = 1;
-                    document.body.removeChild(document.getElementById('app-loading'));
-                }, 700);
-            }
+            setTimeout(()=>{
+                document.getElementById('app').style.opacity = 1;
+                document.body.removeChild(document.getElementById('app-loading'));
+            }, 700);
         },
         methods: {
             getExploreName(){
@@ -137,17 +132,14 @@
                     return 'Unkonwn';
                 }
             },
+            handleHeaderHeight(height) {
+                this.headerHeight = parseFloat(height);
+            },
             alertok() {
                 setTimeout(()=>{
                     this.alert = false;
                     document.body.classList.remove('abandon-scroll');
                 }, 100);
-            },
-            headerMounted() {
-                this.hmount = true;
-            },
-            bannerMounted() {
-                this.bmount = true;
             },
             handleScroll() {
                 let scrollTop = document.documentElement.scrollTop || document.body.scrollTop;
@@ -170,7 +162,7 @@
                 setTimeout(() => {
                     window.scrollTo({
                         behavior: 'smooth',
-                        top: this.$refs.cardwrap.offsetTop -422 // consider banner
+                        top: this.$refs.cardwrap.offsetTop
                     });
                 }, 300);
             },

@@ -39,7 +39,6 @@
             setTimeout(() => {
                 this.canType = true;
             }, 1000);
-            this.$emit('bannerMounted');
         },
         methods: {
             initTyping() {

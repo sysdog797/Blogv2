@@ -2,7 +2,7 @@
     <!-- <div class="header" :class="{'alt': headerShow, 'reveal': !headerShow}"> -->
     <div>
         <transition name="header-fade">
-            <div class="header alt" v-show="headerShow">
+            <div class="header alt" id="header" v-show="headerShow">
                 <h1>
                     <!-- <router-link to="/" class="logo">Syscoding.cn</router-link>
                     &nbsp;by &nbsp;Sys -->
@@ -64,7 +64,8 @@
             };
         },
         mounted(){
-            this.$emit('headerMounted');
+            let headerHeight = window.getComputedStyle(document.getElementById('header')).getPropertyValue('height');
+            this.$emit('handleHeaderHeight', headerHeight);
         },
         methods: {
             showCard(e) {
