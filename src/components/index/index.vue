@@ -108,7 +108,9 @@
         mounted(){
             setTimeout(()=>{
                 document.getElementById('app').style.opacity = 1;
-                document.body.removeChild(document.getElementById('app-loading'));
+                if(document.getElementById('app-loading')){
+                    document.body.removeChild(document.getElementById('app-loading'));
+                };
             }, 700);
         },
         methods: {

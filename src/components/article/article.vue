@@ -1,6 +1,6 @@
 <template>
     <div class="article" @click="bodyClick">
-        <v-header headerShow="false" v-on:showCard="handleShowCard"></v-header>
+        <v-header :headerShow="headerShow" v-on:showCard="handleShowCard"></v-header>
         <div class="content-wrap" v-if="contentShow">
             <header>
                 <div class="icon-wrap">
@@ -41,7 +41,8 @@
                 subtitle: '',
                 backShow: false,
                 contentShow: false,
-                cardShow: false
+                cardShow: false,
+                headerShow: true
             }
         },
         created(){
@@ -62,6 +63,14 @@
             this.$nextTick(() => {
                 window.addEventListener("scroll", this.handleScroll);
             })
+        },
+        mounted() {
+            setTimeout(()=>{ 
+                document.getElementById('app').style.opacity = 1;
+                if(document.getElementById('app-loading')){
+                    document.body.removeChild(document.getElementById('app-loading'));
+                };
+            }, 700);
         },
         methods: {
             handleScroll() {
