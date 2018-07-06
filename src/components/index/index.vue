@@ -70,7 +70,7 @@
                 backShow: false,
                 headerShow: false,
                 headerHeight: 60,  // header高度
-                h: 430,
+                h: 9999,
                 page: 1,
                 loading: false,
                 count: 0,
@@ -143,7 +143,6 @@
             },
             handleScroll() {
                 let scrollTop = document.documentElement.scrollTop || document.body.scrollTop;
-                let vh = document.body.offsetHeight;
                 if(scrollTop > this.headerHeight){
                     this.headerShow = true;    
                 }else{
@@ -154,7 +153,11 @@
                 }else{
                     this.backShow = false;
                 }
-                if(scrollTop - vh > this.h){
+                let boxHeight = window.getComputedStyle(this.$refs.box).getPropertyValue('height');
+                boxHeight = parseFloat(boxHeight);
+                let threshold = boxHeight - window.innerHeight - 5; // 滚动阈值
+                this.h = threshold;
+                if(scrollTop> this.h){
                     this.loadMoreData();
                 }
             },
@@ -167,7 +170,6 @@
                 }, 300);
             },
             handleShowCard() {
-                console.log('show card...');
                 this.cardShow = true;
                 document.body.classList.add('abandon-scroll');
             },
@@ -194,19 +196,18 @@
                     setTimeout(() => {
                         this.datas = this.datas.concat(rs);
                         this.loading = false;
-                    }, 1000)
+                        if(this.page * 4 < this.count){
+                            this.$nextTick(() => {
+                                this.canLoad = true;
+                            })
+                        }else{
+                            this.canLoad = false;
+                        };
+                    }, 1000);
                 }, err => {
                     // err callback
                     console.log(err);
                 });
-                this.h += 589;  // 阈值增加后才能监听
-                if(this.page * 4 < this.count){
-                    this.$nextTick(() => {
-                        this.canLoad = true;
-                    })
-                }else{
-                    this.canLoad = false;
-                }
             }
         },
         components: {
