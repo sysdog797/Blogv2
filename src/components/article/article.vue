@@ -1,18 +1,20 @@
 <template>
     <div class="article" @click="bodyClick">
         <v-header :headerShow="headerShow" v-on:showCard="handleShowCard"></v-header>
-        <div class="content-wrap" v-if="contentShow">
-            <header>
-                <div class="icon-wrap">
-                    <img :src="'../../static/images/article/'+ data.labels[0].name +'.png'" alt/>
+        <transition name="article-fade">
+            <div class="content-wrap" v-if="contentShow">
+                <header>
+                    <div class="icon-wrap">
+                        <img :src="'../../static/images/article/'+ data.labels[0].name +'.png'" alt/>
+                    </div>
+                    <div class="border-2px"></div>
+                    <h2>{{data.title}}</h2>
+                </header>
+                <div class="content-main">
+                    <div class="content" v-html="data.body" v-highlight></div>
                 </div>
-                <div class="border-2px"></div>
-                <h2>{{data.title}}</h2>
-            </header>
-            <div class="content-main">
-                <div class="content" v-html="data.body" v-highlight></div>
             </div>
-        </div>
+        </transition>
         <div class="loading" v-show="!contentShow">
             <loading></loading>
         </div>
