@@ -1,62 +1,65 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="utf-8">
-    <title>Syscoding.cn</title>
-    <link rel="stylesheet" type="text/css" href="/static/css/reset.css">
-    <link href="/static/javascripts/highlight.js/styles/rainbow.css" rel="stylesheet">
-    <link rel="shortcut icon" href="/static/images/favicon.png">
-    <script type="text/javascript">
-      var docEl = document.documentElement;
-      var h;
-      var radio = 1536 / 759.2;
-  
-      function setUnitA() {
-        var boundingWidth = docEl.getBoundingClientRect().width;
-        boundingWidth = boundingWidth > 1260 ? boundingWidth : 1260;
-        var boundingHeight = window.innerHeight;
-        boundingHeight = boundingHeight > 623 ? boundingHeight : 623;
-        var r = boundingWidth / boundingHeight;
-        window.rem = r > radio ? boundingHeight / 75.92 : boundingWidth / 153.6;
-        docEl.style.fontSize = window.rem + 'px';
-      }
-  
-      window.addEventListener('resize', function () {
+
+<head>
+  <meta charset="utf-8">
+  <title>Syscoding.cn</title>
+  <link rel="stylesheet" type="text/css" href="/static/css/reset.css">
+  <link href="/static/javascripts/highlight.js/styles/rainbow.css" rel="stylesheet">
+  <link rel="shortcut icon" href="/static/images/favicon.png">
+  <script type="text/javascript">
+    var docEl = document.documentElement;
+    var h;
+    var radio = 1536 / 759.2;
+
+    function setUnitA() {
+      var boundingWidth = docEl.getBoundingClientRect().width;
+      boundingWidth = boundingWidth > 1260 ? boundingWidth : 1260;
+      var boundingHeight = window.innerHeight;
+      boundingHeight = boundingHeight > 623 ? boundingHeight : 623;
+      var r = boundingWidth / boundingHeight;
+      window.rem = r > radio ? boundingHeight / 75.92 : boundingWidth / 153.6;
+      docEl.style.fontSize = window.rem + 'px';
+    }
+
+    window.addEventListener('resize', function () {
+      clearTimeout(h);
+      h = setTimeout(function () {
+        setUnitA();
+      }, 300);
+    }, false);
+
+    window.addEventListener('pageshow', function (e) {
+      if (e.persisted) {
         clearTimeout(h);
-        h = setTimeout(function(){
+        h = setTimeout(function () {
           setUnitA();
         }, 300);
-      }, false);
-  
-      window.addEventListener('pageshow', function (e) {
-        if (e.persisted) {
-          clearTimeout(h);
-          h = setTimeout(function(){
-            setUnitA();
-          }, 300);
-        }
-      }, false);
-  
-      setUnitA();
-    </script>  
-    <script src="https://ajax.googleapis.com/ajax/libs/webfont/1.6.26/webfont.js"></script>
-    <script src="/static/javascripts/highlight.js/highlight.pack.js"></script>
-  </head>
-  <body>
-    <div id="app-loading">
-        <div class="sk-cube-grid">
-          <div class="sk-cube sk-cube1"></div>
-          <div class="sk-cube sk-cube2"></div>
-          <div class="sk-cube sk-cube3"></div>
-          <div class="sk-cube sk-cube4"></div>
-          <div class="sk-cube sk-cube5"></div>
-          <div class="sk-cube sk-cube6"></div>
-          <div class="sk-cube sk-cube7"></div>
-          <div class="sk-cube sk-cube8"></div>
-          <div class="sk-cube sk-cube9"></div>
-        </div>
-        <span class="info">这值得等待</span>
+      }
+    }, false);
+
+    setUnitA();
+
+  </script>
+  <script src="/static/javascripts/highlight.js/highlight.pack.js"></script>
+</head>
+
+<body>
+  <div id="app-loading">
+    <div class="sk-cube-grid">
+      <div class="sk-cube sk-cube1"></div>
+      <div class="sk-cube sk-cube2"></div>
+      <div class="sk-cube sk-cube3"></div>
+      <div class="sk-cube sk-cube4"></div>
+      <div class="sk-cube sk-cube5"></div>
+      <div class="sk-cube sk-cube6"></div>
+      <div class="sk-cube sk-cube7"></div>
+      <div class="sk-cube sk-cube8"></div>
+      <div class="sk-cube sk-cube9"></div>
     </div>
-    <div id="app"></div>
-  </body>
+    <span class="info">这值得等待</span>
+  </div>
+  <div id="app"></div>
+</body>
+
 </html>
