@@ -6,9 +6,9 @@
                 <h1>
                     <!-- <router-link to="/" class="logo">Syscoding.cn</router-link>
                     &nbsp;by &nbsp;Sys -->
-                    <router-link to="/" class="logo">
+                    <a href="/" class="logo">
                         <img :src="logo" alt="logo" class="syscoding-cn"/>
-                    </router-link>
+                    </a>
                     <span>&nbsp;by &nbsp;Sys</span>
                 </h1>
                 <nav class="nav">
@@ -28,9 +28,9 @@
                 <h1>
                     <!-- <router-link to="/" class="logo">Syscoding.cn</router-link>
                     &nbsp;by &nbsp;Sys -->
-                    <router-link to="/" class="logo">
+                    <a href="/" class="logo">
                         <img :src="logo" alt="logo" class="syscoding-cn"/>
-                    </router-link>
+                    </a>
                     <span>&nbsp;by &nbsp;Sys</span>
                 </h1>
                 <nav class="nav">

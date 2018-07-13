@@ -1,6 +1,18 @@
+@keyframes breathe {
+    0% {
+        bottom: 15px;
+    }
+    50%{
+        bottom: 10px;
+    }
+    100%{
+        bottom: 15px;
+    }
+}
+
 .banner{
     position: relative;
-    padding: 24.125rem 0 29rem 0;
+    //padding: 241.25px 0 290px 0;
     // background-attachment: scroll,	fixed;
     // background-color: #5e42a6;;
     // background-image: url(../../static/images/overlay.png), url(../../static/images/intro.svg);
@@ -9,7 +21,7 @@
     // background-size: auto,	cover;
     background-attachment: fixed;
     background-color: rgb(88, 70, 136);
-    background-image: url(../../static/images/intro.svg);
+    background-image: url(../../static/images/bg-laptop.jpg);
     background-position: center center;
     background-repeat: no-repeat;
     background-size: cover;
@@ -20,55 +32,78 @@
     overflow: hidden;
     min-height: 663px;
 
+    .arrow-box{
+        position: absolute;
+        left: 0;
+        right: 0;
+        bottom: 15px;
+        animation: breathe 1s linear infinite; 
+        cursor: pointer;
+
+        .arrow{
+            width: 35px;
+            transform: rotate(-90deg);
+        }
+    }
+
+    .banner-mask{
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        background-color: rgba(0, 0, 0, .4);
+    }
+
     .wrapper{
         position: absolute;
         left: 50%;
         top: 50%;
         transform: translate(-50%, -50%);
-        height: 24rem;
+        // height: 240px;
     }
 
     h2{
-        font-size: 7rem;
+        font-size: 70px;
         font-weight: 400;
-        line-height: 7.5rem;
-        margin: 0 0 3.75rem 0;
+        line-height: 75px;
+        margin: 0 0 37.5px 0;
         padding: 0;
         font-family: sans-serif;
     }
 
     .logo{
-        width: 25rem;
-        height: 13rem;
+        width: 250px;
+        height: 130px;
     }
 
     .typing-words{
-        font-size: 1.875rem;
+        font-size: 18.75px;
         font-weight: 400;
         display: block;
         //width: 40.4rem;
-        font-size: 1.875rem;
+        font-size: 18.75px;
         // padding-left: 0.5rem;
         margin-left: auto;
         margin-right: auto;
         text-align: left;
-        line-height: 1.875rem;
-        height: 1.875rem;
+        line-height: 18.75px;
+        height: 18.75px;
         font-family: sans-serif;
     }
 
     .template{
-        font-size: 1.875rem;
+        font-size: 18.75px;
         font-weight: 400;
         display: inline-block;
         //width: 40.4rem;
-        font-size: 1.875rem;
+        font-size: 18.75px;
         //padding-left: 0.5rem;
         //margin-left: auto;
         //margin-right: auto;
         //text-align: left;
-        line-height: 1.875rem;
-        height: 1.875rem;
+        line-height: 18.75px;
+        height: 18.75px;
         font-family: sans-serif;
         cursor: default;
         position: relative;
@@ -78,26 +113,26 @@
 
     .button{
         background-color: transparent;
-        box-shadow: inset 0 0 0 .2rem rgba(255, 255, 255, 0.5);
+        box-shadow: inset 0 0 0 2px rgba(255, 255, 255, 0.5);
         color: #fff;
-        border-radius: .3rem;
+        border-radius: 3px;
         border: 0;
         cursor: pointer;
         display: inline-block;
         font-weight: 400;
-        height: 4.875rem;
-        line-height: 4.875rem;
-        padding: 0 4.75rem;
+        height: 48.75px;
+        line-height: 48.75px;
+        padding: 0 47.5px;
         text-align: center;
         text-decoration: none;
         white-space: nowrap;
-        margin-top: 4.625rem;
-        font-size: 1.6rem;
+        margin-top: 46.25px;
+        font-size: 16px;
         .button-ripple();
         font-family: sans-serif;
         position: absolute;
         left: 50%;
-        bottom: -3.2rem;
+        bottom: -32px;
         transform: translate(-50%, -50%);
     }
 }

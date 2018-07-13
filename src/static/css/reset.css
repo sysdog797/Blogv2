@@ -169,7 +169,7 @@
    width: 100%;
    -ms-overflow-style: none;
    overflow: -moz-scrollbars-none;
-   min-width: 1260px;
+   min-width: 1068px;
  }
  
  body {
@@ -209,14 +209,14 @@
 
 #app-loading .info{
   display: block;
-  margin-top: 3rem;
-  letter-spacing: .1rem;
+  margin-top: 30px;
+  letter-spacing: 1px;
 }
 
 .sk-cube-grid {
   margin: 0 auto;
-  width: 4rem;
-  height: 4rem;
+  width: 40px;
+  height: 40px;
 }
 
 .sk-cube-grid .sk-cube {

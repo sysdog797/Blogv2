@@ -1,17 +1,22 @@
 <template>
-    <div class="banner">
+    <div class="banner" id="banner">
+        <div class="banner-mask"></div>
         <div class="wrapper">
             <!-- <h2>Syscoding</h2> -->
             <img class="logo" :src="logo" alt="logo"/>
             <p class="typing-words" ref="slogan" v-bind:style="{width:sloganWidth}">{{msg}}</p>
             <p class="template" ref="template">{{str}}</p>
-            <span class="button" v-on:click="handleClick">Learn More</span>
+            <!-- <span class="button" v-on:click="handleClick">Learn More</span> -->
+        </div>
+        <div class="arrow-box" v-on:click="handleClick">
+            <img class="arrow" :src="arrow" alt="arrow"/>
         </div>
     </div>
 </template>
 
 <script>
     import logo from './syscoding.svg';
+    import arrow from './arrow.svg';
 
     export default {
         data() {
@@ -19,8 +24,9 @@
                 msg: '',
                 str: 'My name is Sys. I am a junior web developer.',
                 logo: logo,
-                sloganWidth: '40.4rem',
-                canType: false
+                sloganWidth: '404px',
+                canType: false,
+                arrow: arrow
             };
         },
         watch: {
@@ -53,7 +59,7 @@
                 }, 50)
             },
             handleClick() {
-                this.$emit('learnMore');
+                this.$emit('arrowClick');
             }
         }
     };

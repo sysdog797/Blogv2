@@ -42,7 +42,7 @@ router.get('/api/updateList/', () => { handleUpdate(); });
 router.get('/api/getList/:page', (req, res) => {
     res.header('Access-Control-Allow-Origin', '*');
     let page = req.params.page;
-    Article.find({}, null, {sort: {number: -1}, skip: (page - 1) * 4, limit: 4}, (err, result) => {
+    Article.find({}, null, {sort: {number: -1}, skip: (page - 1) * 6, limit: 6}, (err, result) => {
         if(err){
             console.log('error message: ' + err);
             res.status(400).send('Bad request: ' + err);

@@ -1,18 +1,18 @@
 <template>
     <div class="box" ref="box" @click="bodyClick">
-        <v-header :headerShow="headerShow" v-on:showCard="handleShowCard" v-on:handleHeaderHeight="handleHeaderHeight"></v-header>
-        <banner v-on:learnMore="handleLearnMore"></banner>
+        <v-header :headerShow="headerStatus" v-on:showCard="handleShowCard" v-on:handleHeaderHeight="handleHeaderHeight"></v-header>
+        <banner v-show="homepage" v-on:arrowClick="handleArrowClick" ref="banner"></banner>
         <div class="container">
-            <div class="intro-card">
+            <!-- <div class="intro-card">
                 <div class="major">
                     <h2>打怪升级中的初级前端工程师</h2>
                     <p>Tips：不想做全栈开发的程序员不是一个好前端</p>
-                </div>
-                <span class="image">
+                </div> -->
+                <!-- <span class="image">
                     <img src="../../static/images/bg-laptop.jpg" alt/>
                     <div class="mask"></div>
-                </span>
-            </div>
+                </span> -->
+            <!-- </div> -->
             <div class="card-wrap" ref="cardwrap">
                 <transition-group name="card-fade">
                     <div class="card-box" v-for="data in datas" :key="data.id">
@@ -50,7 +50,7 @@
                 <div class="card-mask" v-show="cardShow || alert"></div>
             </transition>
         </div>
-        <backtop></backtop>
+        <backtop :backShow="!homepage"></backtop>
     </div>
 </template>
 
@@ -67,7 +67,7 @@
         data() {
             return {
                 datas: [],
-                backShow: false,
+                //backShow: false,
                 headerShow: false,
                 headerHeight: 60,  // header高度
                 h: 9999,
@@ -76,7 +76,10 @@
                 count: 0,
                 canLoad: true,
                 cardShow: false,
-                alert: false
+                alert: false,
+                homepage: true,
+                wheelcount: 0,
+                bannerHeight: 0
             };
         },
         created(){
@@ -87,6 +90,7 @@
                     rs[i].created_at = dayjs(rs[i].created_at).format("MMMM DD, YYYY");
                     let md = new Remarkable();
                     let body = md.render(rs[i].body);
+                    body = body.substr(0, 300); // 只保留文章前面部分，显示为文章简介
                     rs[i].body = body;
                 }
                 this.count = rs[0].number; // article.number == count
@@ -102,7 +106,9 @@
                 document.body.classList.add('abandon-scroll');
             };
             this.$nextTick(() => {
+                this.bannerHeight = parseFloat(window.getComputedStyle(document.getElementById('banner')).getPropertyValue('height'));
                 window.addEventListener("scroll", this.handleScroll);
+                window.addEventListener("wheel", this.handleMouseWhell);
             })
         },
         mounted(){
@@ -112,6 +118,12 @@
                     document.body.removeChild(document.getElementById('app-loading'));
                 };
             }, 700);
+        },
+        computed:{
+            headerStatus: function() {
+                let s = this.headerShow || !this.homepage;
+                return s
+            }
         },
         methods: {
             getExploreName(){
@@ -134,6 +146,58 @@
                     return 'Unkonwn';
                 }
             },
+            handleMouseWhell(e) {
+                console.log(this.wheelcount, this.homepage ? '首页' : '第二页');
+                // if(!this.homepage){
+                //     // 在第二页
+                //     let scrollTop = document.documentElement.scrollTop || document.body.scrollTop;
+                //     if(scrollTop === 0){
+                //         // 到顶了再开始判断
+                //         if(e.wheelDelta > 0 && this.wheelcount < 10){
+                //             this.wheelcount++;
+                //         }else if(e.wheelDelta > 0 && this.wheelcount >= 10){
+                //             this.rolling = true;
+                //             this.homepage = true;
+                //             this.wheelcount = 0;
+                //             //setTimeout(()=>{
+                //                 window.scrollTo({
+                //                     behavior: 'instant',
+                //                     top: this.$refs.banner.$el.clientHeight
+                //                 })
+                //             //}, 0);
+                //             setTimeout(() => {
+                //                 console.log('jinlaile')
+                //                 window.scrollTo({
+                //                     behavior: 'smooth',
+                //                     top: 0
+                //                 });
+                //                 this.rolling = false;
+                //             }, 1000);
+                //         }else if(e.wheelDelta < 0){
+                //             this.wheelcount = 0; // 向下滚动计数就清零
+                //         }
+                //     }
+                // }else{
+                if(this.homepage){
+                    // 在首页
+                    e.preventDefault();
+                    if(e.wheelDelta < 0 && this.wheelcount < 10){
+                        // 向下滚动一定次数才翻页
+                        this.wheelcount++;
+                    }else if(e.wheelDelta < 0 && this.wheelcount >= 10){
+                        window.scrollTo({
+                            behavior: 'smooth',
+                            top: this.$refs.banner.$el.clientHeight
+                        });
+                        setTimeout(()=>{
+                            this.homepage = false;
+                            this.wheelcount = 0;
+                        }, 1000);
+                    }else if(e.wheelDelta > 0){
+                        this.wheelcount = 0    // 向上滚动就清零计数
+                    }
+                }
+            },
             handleHeaderHeight(height) {
                 this.headerHeight = parseFloat(height);
             },
@@ -150,11 +214,11 @@
                 }else{
                     this.headerShow = false;
                 }
-                if(scrollTop > document.body.clientHeight){
-                    this.backShow = true;
-                }else{
-                    this.backShow = false;
-                }
+                // if(scrollTop > document.body.clientHeight){
+                //     this.backShow = true;
+                // }else{
+                //     this.backShow = false;
+                // }
                 let boxHeight = window.getComputedStyle(this.$refs.box).getPropertyValue('height');
                 boxHeight = parseFloat(boxHeight);
                 let threshold = boxHeight - window.innerHeight - 5; // 滚动阈值
@@ -163,13 +227,16 @@
                     this.loadMoreData();
                 }
             },
-            handleLearnMore() {
+            handleArrowClick() {
                 setTimeout(() => {
                     window.scrollTo({
                         behavior: 'smooth',
-                        top: this.$refs.cardwrap.offsetTop
+                        top: this.$refs.banner.$el.clientHeight
                     });
                 }, 300);
+                setTimeout(() => {
+                    this.homepage = false;
+                }, 1000);
             },
             handleShowCard() {
                 this.cardShow = true;
@@ -198,7 +265,7 @@
                     setTimeout(() => {
                         this.datas = this.datas.concat(rs);
                         this.loading = false;
-                        if(this.page * 4 < this.count){
+                        if(this.page * 6 < this.count){
                             this.$nextTick(() => {
                                 this.canLoad = true;
                             })

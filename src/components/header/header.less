@@ -2,9 +2,9 @@
     background: none;
     color: #bbb;
     cursor: default;
-    height: 5.625rem;
+    height: 56.25px;
     left: 0;
-    line-height: 5.625rem;
+    line-height: 56.25px;
     position: absolute;
     top: 0;
     width: 100%;
@@ -13,7 +13,7 @@
 
     .logo{
         font-family: sans-serif;
-        font-size: 2.3rem;
+        font-size: 23px;
     }
     
     &.alt{
@@ -24,41 +24,39 @@
 
     h1{
         color: inherit;
-        // height: 5.625rem;
-        // left: 0.7rem;
         height: inherit;
-        left: 2.7rem;
+        left: 27px;
         line-height: inherit;
         margin: 0;
         padding: 0;
         position: absolute;
         top: 0;
-        font-size: 1.6rem;
+        font-size: 16px;
         font-weight: 400;
 
         a{
             color: #fff;
             font-weight: 400;
             border: 0;
-            height: 5.625rem;
-            line-height: 5.625rem;
+            height: 56.25px;
+            line-height: 56.25px;
             display: inline-block;
             vertical-align: top;
 
             .syscoding-cn{
-                height: 5.625rem;
+                height: 56.25px;
                 display: inline-block;
                 position: relative;
                 top: 0;
-                width: 12rem;
-                margin-right: 1rem;
+                width: 120px;
+                margin-right: 10px;
             }
         }
 
         span{
             display: inline-block;
             position: relative;
-            left: -0.8rem;
+            left: -8px;
         }
     }
 
@@ -66,7 +64,7 @@
         height: inherit;
         line-height: inherit;
         position: absolute;
-        right: 1.625rem;
+        right: 16.25px;
         top: 0;
         vertical-align: middle;
 
@@ -79,19 +77,24 @@
                 white-space: nowrap;
 
                 .item{
-                    color: #fff;
+                    color: #bbb;
                     display: inline-block;
                     text-decoration: none;
                     border: 0;
-                    height: 5.625rem;
-                    line-height: 5.625rem;
-                    padding: 0 2.125rem;
+                    height: 56.25px;
+                    line-height: 56.25px;
+                    padding: 0 21.25px;
                     font-weight: 400;
-                    font-size: 1.7rem;
+                    font-size: 17px;
                     cursor: pointer;
                     overflow: hidden;
                     position: relative;
                     transition: background-color .3s linear, border .3s linear;
+                    transition: color .5s;
+
+                    &:hover{
+                        color: #fff;
+                    }
 
                     &:after {
                         content: "";
@@ -127,7 +130,7 @@
 
 .header-fade-enter, .header-fade-leave-to{
     opacity: 0;
-    transform: translateY(-6rem);
+    transform: translateY(-60px);
 }
 
 .header-static-enter-active, .header-static-leave-active{
