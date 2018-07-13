@@ -22,10 +22,7 @@ export default {
   },
   methods: {
     back() {
-      window.scrollTo({
-        behavior: "smooth",
-        top: 0
-      });
+      this.$emit("backTop");
     }
   }
 };

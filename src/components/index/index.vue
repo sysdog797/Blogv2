@@ -1,8 +1,8 @@
 <template>
     <div class="box" ref="box" @click="bodyClick">
         <v-header :headerShow="headerShow" v-on:showCard="handleShowCard"></v-header>
-        <banner v-on:arrowClick="handleArrowClick" ref="banner"></banner>
-        <div class="container">
+        <banner v-on:arrowClick="handleArrowClick" :arrowShow="homepage" ref="banner"></banner>
+        <div class="container" v-on:mouseover="handleCmouseOver" v-on:mousemove="handleCmouseMove">
             <!-- <div class="intro-card">
                 <div class="major">
                     <h2>打怪升级中的初级前端工程师</h2>
@@ -51,7 +51,7 @@
                 <div class="card-mask" v-show="cardShow || alert"></div>
             </transition>
         </div>
-        <backtop :backShow="backShow"></backtop>
+        <backtop :backShow="backShow" v-on:backTop="handleBackTop"></backtop>
     </div>
 </template>
 
@@ -111,12 +111,6 @@ export default {
     });
   },
   mounted() {
-    let scrollTop =
-      document.documentElement.scrollTop || document.body.scrollTop;
-    let bannerHeight = this.$refs.banner.$el.clientHeight;
-    if (scrollTop <= bannerHeight) {
-      this.homepage = false;
-    }
     setTimeout(() => {
       document.getElementById("app").style.opacity = 1;
       if (document.getElementById("app-loading")) {
@@ -158,6 +152,22 @@ export default {
       } else {
         return "Unkonwn";
       }
+    },
+    handleCmouseOver() {
+      let scrollTop =
+        document.documentElement.scrollTop || document.body.scrollTop;
+      if (scrollTop < this.$refs.banner.$el.clientHeight) return;
+      this.homepage = false;
+    },
+    handleCmouseMove() {
+      //console.log(2);
+    },
+    handleBackTop() {
+      this.homepage = true;
+      window.scrollTo({
+        behavior: "smooth",
+        top: 0
+      });
     },
     handleMouseWhell(e) {
       // 首屏禁止滚轮事件
