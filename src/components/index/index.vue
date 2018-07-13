@@ -1,7 +1,7 @@
 <template>
     <div class="box" ref="box" @click="bodyClick">
-        <v-header :headerShow="headerStatus" v-on:showCard="handleShowCard" v-on:handleHeaderHeight="handleHeaderHeight"></v-header>
-        <banner v-show="homepage" v-on:arrowClick="handleArrowClick" ref="banner"></banner>
+        <v-header :headerShow="headerShow" v-on:showCard="handleShowCard"></v-header>
+        <banner v-on:arrowClick="handleArrowClick" ref="banner"></banner>
         <div class="container">
             <!-- <div class="intro-card">
                 <div class="major">
@@ -13,6 +13,7 @@
                     <div class="mask"></div>
                 </span> -->
             <!-- </div> -->
+            <div class="egg">Welcome to my world!</div>
             <div class="card-wrap" ref="cardwrap">
                 <transition-group name="card-fade">
                     <div class="card-box" v-for="data in datas" :key="data.id">
@@ -50,243 +51,219 @@
                 <div class="card-mask" v-show="cardShow || alert"></div>
             </transition>
         </div>
-        <backtop :backShow="!homepage"></backtop>
+        <backtop :backShow="backShow"></backtop>
     </div>
 </template>
 
 <script>
-    import header from "../../components/header/header";
-    import banner from "../../components/banner/banner";
-    import backtop from "../../components/backtop/backtop";
-    import loading from "../../components/loading/loading";
-    import card from "../../components/card/card";
-    import dayjs from 'dayjs';
-    import Remarkable from 'remarkable';
+import header from "../../components/header/header";
+import banner from "../../components/banner/banner";
+import backtop from "../../components/backtop/backtop";
+import loading from "../../components/loading/loading";
+import card from "../../components/card/card";
+import dayjs from "dayjs";
+import Remarkable from "remarkable";
 
-    export default {
-        data() {
-            return {
-                datas: [],
-                //backShow: false,
-                headerShow: false,
-                headerHeight: 60,  // header高度
-                h: 9999,
-                page: 1,
-                loading: false,
-                count: 0,
-                canLoad: true,
-                cardShow: false,
-                alert: false,
-                homepage: true,
-                wheelcount: 0,
-                bannerHeight: 0
-            };
-        },
-        created(){
-            const url = 'http://localhost:8088/api/getList/' + this.page;
-            this.$http.get(url).then((response) => {
-                let rs = response.body;
-                for(let i = 0; i < rs.length; i++){
-                    rs[i].created_at = dayjs(rs[i].created_at).format("MMMM DD, YYYY");
-                    let md = new Remarkable();
-                    let body = md.render(rs[i].body);
-                    body = body.substr(0, 300); // 只保留文章前面部分，显示为文章简介
-                    rs[i].body = body;
-                }
-                this.count = rs[0].number; // article.number == count
-                this.datas = rs;
-            }, err => {
-                // err callback
-                console.log(err);
-            });
-            let userAgent = this.getExploreName();
-            console.log(userAgent);
-            if(userAgent !== 'Chrome'){
-                this.alert = true;
-                document.body.classList.add('abandon-scroll');
-            };
-            this.$nextTick(() => {
-                this.bannerHeight = parseFloat(window.getComputedStyle(document.getElementById('banner')).getPropertyValue('height'));
-                window.addEventListener("scroll", this.handleScroll);
-                window.addEventListener("wheel", this.handleMouseWhell);
-            })
-        },
-        mounted(){
-            setTimeout(()=>{
-                document.getElementById('app').style.opacity = 1;
-                if(document.getElementById('app-loading')){
-                    document.body.removeChild(document.getElementById('app-loading'));
-                };
-            }, 700);
-        },
-        computed:{
-            headerStatus: function() {
-                let s = this.headerShow || !this.homepage;
-                return s
-            }
-        },
-        methods: {
-            getExploreName(){
-                var userAgent = navigator.userAgent;
-                if(userAgent.indexOf("Opera") > -1 || userAgent.indexOf("OPR") > -1){
-                    return 'Opera';
-                }else if(userAgent.indexOf("compatible") > -1 && userAgent.indexOf("MSIE") > -1){
-                    return 'IE';
-                }else if(userAgent.indexOf("Edge") > -1){
-                    return 'Edge';
-                }else if(userAgent.indexOf("Firefox") > -1){
-                    return 'Firefox';
-                }else if(userAgent.indexOf("Safari") > -1 && userAgent.indexOf("Chrome") == -1){
-                    return 'Safari';
-                }else if(userAgent.indexOf("Chrome") > -1 && userAgent.indexOf("Safari") > -1){
-                    return 'Chrome';
-                }else if(!!window.ActiveXObject || "ActiveXObject" in window){
-                    return 'IE>=11';
-                }else{
-                    return 'Unkonwn';
-                }
-            },
-            handleMouseWhell(e) {
-                console.log(this.wheelcount, this.homepage ? '首页' : '第二页');
-                // if(!this.homepage){
-                //     // 在第二页
-                //     let scrollTop = document.documentElement.scrollTop || document.body.scrollTop;
-                //     if(scrollTop === 0){
-                //         // 到顶了再开始判断
-                //         if(e.wheelDelta > 0 && this.wheelcount < 10){
-                //             this.wheelcount++;
-                //         }else if(e.wheelDelta > 0 && this.wheelcount >= 10){
-                //             this.rolling = true;
-                //             this.homepage = true;
-                //             this.wheelcount = 0;
-                //             //setTimeout(()=>{
-                //                 window.scrollTo({
-                //                     behavior: 'instant',
-                //                     top: this.$refs.banner.$el.clientHeight
-                //                 })
-                //             //}, 0);
-                //             setTimeout(() => {
-                //                 console.log('jinlaile')
-                //                 window.scrollTo({
-                //                     behavior: 'smooth',
-                //                     top: 0
-                //                 });
-                //                 this.rolling = false;
-                //             }, 1000);
-                //         }else if(e.wheelDelta < 0){
-                //             this.wheelcount = 0; // 向下滚动计数就清零
-                //         }
-                //     }
-                // }else{
-                if(this.homepage){
-                    // 在首页
-                    e.preventDefault();
-                    if(e.wheelDelta < 0 && this.wheelcount < 10){
-                        // 向下滚动一定次数才翻页
-                        this.wheelcount++;
-                    }else if(e.wheelDelta < 0 && this.wheelcount >= 10){
-                        window.scrollTo({
-                            behavior: 'smooth',
-                            top: this.$refs.banner.$el.clientHeight
-                        });
-                        setTimeout(()=>{
-                            this.homepage = false;
-                            this.wheelcount = 0;
-                        }, 1000);
-                    }else if(e.wheelDelta > 0){
-                        this.wheelcount = 0    // 向上滚动就清零计数
-                    }
-                }
-            },
-            handleHeaderHeight(height) {
-                this.headerHeight = parseFloat(height);
-            },
-            alertok() {
-                setTimeout(()=>{
-                    this.alert = false;
-                    document.body.classList.remove('abandon-scroll');
-                }, 100);
-            },
-            handleScroll() {
-                let scrollTop = document.documentElement.scrollTop || document.body.scrollTop;
-                if(scrollTop > this.headerHeight){
-                    this.headerShow = true;    
-                }else{
-                    this.headerShow = false;
-                }
-                // if(scrollTop > document.body.clientHeight){
-                //     this.backShow = true;
-                // }else{
-                //     this.backShow = false;
-                // }
-                let boxHeight = window.getComputedStyle(this.$refs.box).getPropertyValue('height');
-                boxHeight = parseFloat(boxHeight);
-                let threshold = boxHeight - window.innerHeight - 5; // 滚动阈值
-                this.h = threshold;
-                if(scrollTop> this.h){
-                    this.loadMoreData();
-                }
-            },
-            handleArrowClick() {
-                setTimeout(() => {
-                    window.scrollTo({
-                        behavior: 'smooth',
-                        top: this.$refs.banner.$el.clientHeight
-                    });
-                }, 300);
-                setTimeout(() => {
-                    this.homepage = false;
-                }, 1000);
-            },
-            handleShowCard() {
-                this.cardShow = true;
-                document.body.classList.add('abandon-scroll');
-            },
-            bodyClick() {
-                if(!this.alert){
-                    this.cardShow = false;
-                    document.body.classList.remove('abandon-scroll');
-                };
-            },
-            loadMoreData() {
-                if(!this.canLoad) return;
-                this.loading = true;
-                this.canLoad = false;
-                this.page++;
-                const url = 'http://localhost:8088/api/getList/' + this.page;
-                this.$http.get(url).then((response) => {
-                    let rs = response.body;
-                    for(let i = 0; i < rs.length; i++){
-                        rs[i].created_at = dayjs(rs[i].created_at).format("MMMM DD, YYYY");
-                        let md = new Remarkable();
-                        let body = md.render(rs[i].body);
-                        rs[i].body = body;
-                    }
-                    setTimeout(() => {
-                        this.datas = this.datas.concat(rs);
-                        this.loading = false;
-                        if(this.page * 6 < this.count){
-                            this.$nextTick(() => {
-                                this.canLoad = true;
-                            })
-                        }else{
-                            this.canLoad = false;
-                        };
-                    }, 1000);
-                }, err => {
-                    // err callback
-                    console.log(err);
-                });
-            }
-        },
-        components: {
-            "v-header": header,
-            banner,
-            backtop,
-            loading,
-            card
-        }
+export default {
+  data() {
+    return {
+      datas: [],
+      headerShow: false,
+      h: 9999,
+      page: 1,
+      loading: false,
+      count: 0,
+      canLoad: true,
+      cardShow: false,
+      alert: false,
+      homepage: true
     };
+  },
+  created() {
+    const url = "http://localhost:8088/api/getList/" + this.page;
+    this.$http.get(url).then(
+      response => {
+        let rs = response.body;
+        for (let i = 0; i < rs.length; i++) {
+          rs[i].created_at = dayjs(rs[i].created_at).format("MMMM DD, YYYY");
+          let md = new Remarkable();
+          let body = md.render(rs[i].body);
+          body = body.substr(0, 300); // 只保留文章前面部分，显示为文章简介
+          rs[i].body = body;
+        }
+        this.count = rs[0].number; // article.number == count
+        this.datas = rs;
+      },
+      err => {
+        // err callback
+        console.log(err);
+      }
+    );
+    let userAgent = this.getExploreName();
+    //console.log(userAgent);
+    if (userAgent !== "Chrome") {
+      this.alert = true;
+      document.body.classList.add("abandon-scroll");
+    }
+    this.$nextTick(() => {
+      window.addEventListener("scroll", this.handleScroll);
+      window.addEventListener("wheel", this.handleMouseWhell);
+    });
+  },
+  mounted() {
+    let scrollTop =
+      document.documentElement.scrollTop || document.body.scrollTop;
+    let bannerHeight = this.$refs.banner.$el.clientHeight;
+    if (scrollTop <= bannerHeight) {
+      this.homepage = false;
+    }
+    setTimeout(() => {
+      document.getElementById("app").style.opacity = 1;
+      if (document.getElementById("app-loading")) {
+        document.body.removeChild(document.getElementById("app-loading"));
+      }
+    }, 700);
+  },
+  computed: {
+    backShow: function() {
+      return !this.homepage;
+    }
+  },
+  methods: {
+    getExploreName() {
+      var userAgent = navigator.userAgent;
+      if (userAgent.indexOf("Opera") > -1 || userAgent.indexOf("OPR") > -1) {
+        return "Opera";
+      } else if (
+        userAgent.indexOf("compatible") > -1 &&
+        userAgent.indexOf("MSIE") > -1
+      ) {
+        return "IE";
+      } else if (userAgent.indexOf("Edge") > -1) {
+        return "Edge";
+      } else if (userAgent.indexOf("Firefox") > -1) {
+        return "Firefox";
+      } else if (
+        userAgent.indexOf("Safari") > -1 &&
+        userAgent.indexOf("Chrome") == -1
+      ) {
+        return "Safari";
+      } else if (
+        userAgent.indexOf("Chrome") > -1 &&
+        userAgent.indexOf("Safari") > -1
+      ) {
+        return "Chrome";
+      } else if (!!window.ActiveXObject || "ActiveXObject" in window) {
+        return "IE>=11";
+      } else {
+        return "Unkonwn";
+      }
+    },
+    handleMouseWhell(e) {
+      // 首屏禁止滚轮事件
+      if (this.homepage) {
+        e.preventDefault();
+        return;
+      }
+    },
+    alertok() {
+      setTimeout(() => {
+        this.alert = false;
+        document.body.classList.remove("abandon-scroll");
+      }, 100);
+    },
+    handleScroll(e) {
+      let scrollTop =
+        document.documentElement.scrollTop || document.body.scrollTop;
+      let bannerHeight = this.$refs.banner.$el.clientHeight;
+      // 第二屏到顶不能向上滚动
+      if (scrollTop < this.$refs.banner.$el.clientHeight && !this.homepage) {
+        window.scrollTo({
+          behavior: "instant",
+          top: bannerHeight
+        });
+        return;
+      }
+      // 导航栏样式
+      if (scrollTop >= bannerHeight) {
+        this.headerShow = true;
+      } else {
+        this.headerShow = false;
+      }
+      // lazyload
+      let boxHeight = window
+        .getComputedStyle(this.$refs.box)
+        .getPropertyValue("height");
+      boxHeight = parseFloat(boxHeight);
+      let threshold = boxHeight - window.innerHeight - 5; // 滚动阈值
+      this.h = threshold;
+      if (scrollTop > this.h) {
+        this.loadMoreData();
+      }
+    },
+    handleArrowClick() {
+      setTimeout(() => {
+        window.scrollTo({
+          behavior: "smooth",
+          top: this.$refs.banner.$el.clientHeight
+        });
+      }, 300);
+      setTimeout(() => {
+        this.homepage = false;
+      }, 1000);
+    },
+    handleShowCard() {
+      this.cardShow = true;
+      document.body.classList.add("abandon-scroll");
+    },
+    bodyClick() {
+      if (!this.alert) {
+        this.cardShow = false;
+        document.body.classList.remove("abandon-scroll");
+      }
+    },
+    loadMoreData() {
+      if (!this.canLoad) return;
+      this.loading = true;
+      this.canLoad = false;
+      this.page++;
+      const url = "http://localhost:8088/api/getList/" + this.page;
+      this.$http.get(url).then(
+        response => {
+          let rs = response.body;
+          for (let i = 0; i < rs.length; i++) {
+            rs[i].created_at = dayjs(rs[i].created_at).format("MMMM DD, YYYY");
+            let md = new Remarkable();
+            let body = md.render(rs[i].body);
+            rs[i].body = body;
+          }
+          setTimeout(() => {
+            this.datas = this.datas.concat(rs);
+            this.loading = false;
+            if (this.page * 6 < this.count) {
+              this.$nextTick(() => {
+                this.canLoad = true;
+              });
+            } else {
+              this.canLoad = false;
+            }
+          }, 1000);
+        },
+        err => {
+          // err callback
+          console.log(err);
+        }
+      );
+    }
+  },
+  components: {
+    "v-header": header,
+    banner,
+    backtop,
+    loading,
+    card
+  }
+};
 </script>
 
 <style lang="less" src="./index.less"></style>

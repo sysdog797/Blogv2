@@ -50,30 +50,26 @@
 </template>
 
 <script>
-    import logo from './syscoding.cn.svg';
+import logo from "./syscoding.cn.svg";
 
-    export default {
-        props:{
-            headerShow: {
-                type: Boolean
-            }
-        },
-        data() {
-            return {
-                logo: logo
-            };
-        },
-        mounted(){
-            let headerHeight = window.getComputedStyle(document.getElementById('header')).getPropertyValue('height');
-            this.$emit('handleHeaderHeight', headerHeight);
-        },
-        methods: {
-            showCard(e) {
-                e.stopPropagation();
-                this.$emit('showCard');
-            }
-        }
+export default {
+  props: {
+    headerShow: {
+      type: Boolean
+    }
+  },
+  data() {
+    return {
+      logo: logo
     };
+  },
+  methods: {
+    showCard(e) {
+      e.stopPropagation();
+      this.$emit("showCard");
+    }
+  }
+};
 </script>
 
 <style lang="less" src="./header.less"></style>
