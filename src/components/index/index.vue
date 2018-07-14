@@ -1,8 +1,8 @@
 <template>
-    <div class="box" ref="box" @click="bodyClick">
-        <v-header :headerShow="headerShow" v-on:showCard="handleShowCard"></v-header>
-        <banner v-on:arrowClick="handleArrowClick" :arrowShow="homepage" ref="banner"></banner>
-        <div class="container" v-on:mouseover="handleCmouseOver" v-on:mousemove="handleCmouseMove">
+    <div id="box" class="box" ref="box" @click="bodyClick">
+        <v-header :headerShow="headerShow" v-on:showCard="handleShowCard" ref="header"></v-header>
+        <banner v-on:arrowClick="handleArrowClick" :arrowShow="arrowShow" ref="banner"></banner>
+        <div id="container" class="container">
             <!-- <div class="intro-card">
                 <div class="major">
                     <h2>打怪升级中的初级前端工程师</h2>
@@ -76,7 +76,8 @@ export default {
       canLoad: true,
       cardShow: false,
       alert: false,
-      homepage: true
+      backShow: false,
+      arrowShow: true
     };
   },
   created() {
@@ -107,7 +108,6 @@ export default {
     }
     this.$nextTick(() => {
       window.addEventListener("scroll", this.handleScroll);
-      window.addEventListener("wheel", this.handleMouseWhell);
     });
   },
   mounted() {
@@ -117,11 +117,6 @@ export default {
         document.body.removeChild(document.getElementById("app-loading"));
       }
     }, 700);
-  },
-  computed: {
-    backShow: function() {
-      return !this.homepage;
-    }
   },
   methods: {
     getExploreName() {
@@ -153,28 +148,8 @@ export default {
         return "Unkonwn";
       }
     },
-    handleCmouseOver() {
-      let scrollTop =
-        document.documentElement.scrollTop || document.body.scrollTop;
-      if (scrollTop < this.$refs.banner.$el.clientHeight) return;
-      this.homepage = false;
-    },
-    handleCmouseMove() {
-      //console.log(2);
-    },
     handleBackTop() {
-      this.homepage = true;
-      window.scrollTo({
-        behavior: "smooth",
-        top: 0
-      });
-    },
-    handleMouseWhell(e) {
-      // 首屏禁止滚轮事件
-      if (this.homepage) {
-        e.preventDefault();
-        return;
-      }
+      this.$scrollTo("#container", 500, { cancelable: false, offset: -120 });
     },
     alertok() {
       setTimeout(() => {
@@ -186,19 +161,25 @@ export default {
       let scrollTop =
         document.documentElement.scrollTop || document.body.scrollTop;
       let bannerHeight = this.$refs.banner.$el.clientHeight;
-      // 第二屏到顶不能向上滚动
-      if (scrollTop < this.$refs.banner.$el.clientHeight && !this.homepage) {
-        window.scrollTo({
-          behavior: "instant",
-          top: bannerHeight
-        });
-        return;
-      }
+      let backHeight = bannerHeight + 400;
+      let arrowHeight = bannerHeight / 2;
       // 导航栏样式
-      if (scrollTop >= bannerHeight) {
+      if (scrollTop >= 80) {
         this.headerShow = true;
       } else {
         this.headerShow = false;
+      }
+      // 回到顶部箭头
+      if (scrollTop >= backHeight) {
+        this.backShow = true;
+      } else {
+        this.backShow = false;
+      }
+      // arrow
+      if (scrollTop >= arrowHeight) {
+        this.arrowShow = false;
+      } else {
+        this.arrowShow = true;
       }
       // lazyload
       let boxHeight = window
@@ -213,14 +194,8 @@ export default {
     },
     handleArrowClick() {
       setTimeout(() => {
-        window.scrollTo({
-          behavior: "smooth",
-          top: this.$refs.banner.$el.clientHeight
-        });
+        this.$scrollTo("#container", 500, { cancelable: false, offset: -120 });
       }, 300);
-      setTimeout(() => {
-        this.homepage = false;
-      }, 1000);
     },
     handleShowCard() {
       this.cardShow = true;

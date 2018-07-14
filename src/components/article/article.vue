@@ -90,13 +90,9 @@ export default {
       }
     },
     handleBackTop() {
-      window.scrollTo({
-        behavior: "smooth",
-        top: 0
-      });
+      this.$scrollTo(".article", 500, { cancelable: false, offset: -90 });
     },
     handleShowCard() {
-      console.log("show card...");
       this.cardShow = true;
       document.body.classList.add("abandon-scroll");
     },
