@@ -82,7 +82,6 @@ export default {
       let scrollTop =
         document.documentElement.scrollTop || document.body.scrollTop;
       let vh = document.body.offsetHeight;
-      console.log(vh, scrollTop);
       if (scrollTop > document.body.clientHeight) {
         this.backShow = true;
       } else {

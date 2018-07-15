@@ -48,7 +48,8 @@ export default {
   mounted() {
     let template = this.$refs.template;
     let slogan = this.$refs.sloagn;
-    this.sloganWidth = template.getBoundingClientRect().width + "px";
+    let tmpWidth = Math.ceil(template.getBoundingClientRect().width * 10) / 10;
+    this.sloganWidth = tmpWidth + "px";
     setTimeout(() => {
       this.canType = true;
     }, 1000);
