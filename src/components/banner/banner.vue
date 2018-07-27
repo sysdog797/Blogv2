@@ -10,7 +10,8 @@
         </div>
         <transition name="arrow-fade">
             <div class="arrow-box" v-show="arrowShow" v-on:click="handleClick">
-                <img class="arrow" :src="arrow" alt="arrow"/>
+                <!-- <img class="arrow" :src="arrow" alt="arrow"/> -->
+                <span class="arrow"></span>
             </div>
         </transition>
     </div>

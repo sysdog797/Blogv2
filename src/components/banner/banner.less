@@ -1,12 +1,18 @@
 @keyframes breathe {
     0% {
-        bottom: 15px;
+        bottom: 40px;
+        opacity: 0;
     }
     50%{
+        opacity: 1;
+    }
+    99%{
         bottom: 10px;
+        opacity: 0;
     }
     100%{
-        bottom: 15px;
+        bottom: 40px;
+        opacity: 0;
     }
 }
 
@@ -34,16 +40,24 @@
 
     .arrow-box{
         position: absolute;
-        left: 0;
+        left: 50%;
         right: 0;
         bottom: 15px;
-        animation: breathe 1s linear infinite; 
+        animation: breathe 2s  infinite; 
         cursor: pointer;
+        width: 24px;
+        height: 24px;
+        margin: 0 5px;
+        border-color: #fff;
+        border-left: 1px solid #fff;
+        border-bottom: 1px solid #fff;
+        transform: translateX(-50%) rotate(-45deg);
+        display: inline-block;
 
-        .arrow{
-            width: 35px;
-            transform: rotate(-90deg);
-        }
+        // .arrow{
+        //     width: 35px;
+        //     transform: rotate(-90deg);
+        // }
     }
 
     .banner-mask{
